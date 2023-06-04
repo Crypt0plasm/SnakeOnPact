@@ -1,16 +1,4 @@
 (namespace "free")
-
-;(enforce-keyset (read-keyset "DH-Master-Keyset"))
-  ;@doc "Reads the a given key under the name of <DH-Master-keyset>, and then enforce it"
-;(define-keyset "free.DH-Master-Keyset" (read-keyset "DH-Master-Keyset"))
-;(env-data { "DH-Master-Keyset": ["6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6"] })
-;(define-keyset "free.DH-Master-Keyset" (read-keyset "DH-Master-Keyset"))
-;(define-keyset "free.DH-Master-Minter-Keyset" (read-keyset "DH-Master-Minter-Keyset"))
-  ;@doc "Defines the keyset in the free namespace, using the key that was read"
-
-;;Main Ouroboros Auryn Elite-Auryn (Snake) Smart Contract.
-;; This contract employs a triple token design with vesting, therefore is a lot more complex
-;; than the simple kadena coin contracts.
 ;;
 ;;
 ;;==============================================================================
