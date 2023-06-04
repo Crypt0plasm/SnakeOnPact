@@ -1,78 +1,125 @@
 (namespace "free")
 ;;
 ;;
+;; PART A      [CSS - Capabilities, Constants and Schemas]
+;; PART A1      CAPABILITIES:
+;; PART A2      CONSTANTS:
+;; PART A3      SCHEMAS and TABLES:
+;; PART B      [FUNCTIONS]
+;; PART B1      INITIALISATION
+;;      B2      VALIDATION
+;;      B3      LISTS
+;;      B4      IZ-FUNCTIONS
+;;      B5      MATH
+;;      B6      ACCOUNT MANAGEMENT
+;;      B7      SNAPSHOTS
+;;      B8      UPDATE LEDGERS
+;;      B9      BIRTH
+;;      B10     MINT Functions
+;;      B11     BURN Functions
+;;      B12     VESTING Functions
+;;      B13     COIL-UNCOIL Functions
+;;      B14     TRANSFER FUNCTIONS
+;;      B15     REPL USAGE FUNCTIONS
+;; PART C      [CREATE TABLES]
+;;
 ;;==============================================================================
 ;;
-;; PART 00.1    CAPABILITIES:
-;;              BARONIC_RULE - governance Capability
-;;              ADMIN - admin Capability
-;;              MASTERMINTER
-;;              ROTATE
+;; PART A1      CAPABILITIES:
 ;;
-;;              COIL_OUROBOROS
-;;              COIL_AURYN
-;;              UNCOIL_AURYN
-;;              UNCOIL_AURYN-HARVEST
-;;              UNCOIL_ELITE-AURYN
-;;              UNCOIL_ELITE-AURYN-HARVEST
+;;              [No TIER Capabilities]
+;;                BARONIC_RULE - governance Capability
+;;                MASTERMINTER
+;;                ADMIN - admin Capability
 ;;
-;;              UPDATE-ALL_AGE
-;;              UPDATE_AGE
+;;              [Update TIER 0 Capabilities]
+;;                IZSNAKE
+;;                ROTATE
+;;                UPDATE_AGE
+;;                UPDATE_UNCOIL-LEDGERS
+;;                UPDATE_SUPPLY
+;;                RAW_BURN
+;;                RECYCLE_TO_CODINGDIVISION
+;;                RECYCLE_TO_LIQUIDITYFARMING
+;;                RECYCLE_TO_SHAREHOLDERS
+;;                RECYCLE_TO_SNAKEDAO
+;;                RECYCLE_TO_SUBSIDIARY
 ;;
-;;              IZSNAKE
-;;              FIX_ELITE
-;;              UPDATE_UNCOIL-LEDGERS
+;;              [TIER 1 Capabilities]
+;;                UPDATE-ALL_AGE
+;;                FIX_ELITE
 ;;
-;;              RAW_CREDIT
-;;              DIRECT_CREDIT
-;;              DIRECT_CREDIT_ELITE
-;;              CREDIT_EXISTING
-;;              CREDIT_EXISTING_ELITE
-
-;;              RAW_DEBIT
-;;              DIRECT_DEBIT
-;;              DIRECT_DEBIT_ELITE
-;;              DEBIT_EXISTING
-;;              DEBIT_EXISTING_ELITE
-
-;;              GENESIS_SPAWN
-;;              DAILY_SPAWN
-
-;;              TRANSFER
-;;              ELITE_TRANSFER
-;;              TRANSFER_NOFEE
-;;              TRANSFER_AURYN
-;;              TRANSFER_ELITE-AURYN
+;;              [BURN/MINT Capabilities]
+;;                BURN_OUROBOROS
+;;                BURN_UNCOIL-FEE
+;;                BURN_AURYN
+;;                BURN_ELITE-AURYN
+;;                RECYCLE_AURYNS
+;;                DIRECT_BURN
+;;                ***
+;;                MINT_OUROBOROS
+;;                MINT_AURYN
+;;                MINT_ELITE_AURYN
 ;;
-;;              RECYCLE_AURYNS
-;;              RECYCLE_TO_CODINGDIVISION
-;;              RECYCLE_TO_LIQUIDITYFARMING
-;;              RECYCLE_TO_SHAREHOLDERS
-;;              RECYCLE_TO_SNAKEDAO
-;;              RECYCLE_TO_SUBSIDIARY
-
-;;              BURN_OUROBOROS
-;;              BURN_UNCOIL-FEE
-;;              RAW_BURN
-;;              DIRECT_BURN
-;;              NEWHEROTA
+;;              [COIL/UNCOIL Capabilities]
+;;                COIL_OUROBOROS
+;;                COIL_AURYN
+;;                UNCOIL_AURYN
+;;                UNCOIL_AURYN-HARVEST
+;;                UNCOIL_ELITE-AURYN
+;;                UNCOIL_ELITE-AURYN-HARVEST
 ;;
-;; PART 00.2    CONSTANTS
+;;              [COMPOSED SPAWNING Capabilities]
+;;                GENESIS_SPAWN
+;;                DAILY_SPAWN
+;;
+;;              [CREDIT Capabilities]
+;;                RAW_CREDIT
+;;                DIRECT_CREDIT
+;;                DIRECT_CREDIT_ELITE
+;;                CREDIT_EXISTING
+;;                CREDIT_EXISTING_ELITE
+;;
+;;              [DEBIT Capabilities]
+;;                RAW_DEBIT
+;;                DIRECT_DEBIT
+;;                DIRECT_DEBIT_ELITE
+;;                DEBIT_EXISTING
+;;                DEBIT_EXISTING_ELITE
+;;
+;;              [TRANSFER Capabilities]
+;;                TRANSFER
+;;                ELITE_TRANSFER
+;;                TRANSFER_NOFEE
+;;                TRANSFER_AURYN
+;;                TRANSFER_ELITE-AURYN
+;;
+;;              [HEROTAG Capabilities]
+;;                NEWHEROTAG
+;;
+;;==============================================================================
+;;
+;; PART A2      CONSTANTS:
+;;
+;;==============================================================================
+;;
+;; PART A3      SCHEMAS and TABLES:
+;;
+;;==============================================================================
 ;;
 ;;
-;; PART 00.3    SCHEMAS and TABLES
+;; PART B      [FUNCTIONS]
 ;;
 ;;
-;; PART 01.     GENERAL FUNCTIONS
-;;
-;;               INITIALISATION
+;; PART B1      INITIALISATION
 ;;
 ;;                [RUN.C]BirthSnakes
 ;;                [XXX.R]SpawnMintingCounter
 ;;                [XXX.R]SpawnBurningCounter
 ;;                [XXX.R]SpawnSupplyCounter
 ;;
-;;               VALIDATION
+;;
+;;      B2      VALIDATION
 ;;
 ;;                [FREE.0]EnforceSnakePrecision
 ;;                [FREE.0]ValidateAccount
@@ -103,7 +150,8 @@
 ;;                enforce-reserved
 ;;                check-reserved
 ;;
-;;               LISTS
+;;
+;;      B3      LISTS
 ;;
 ;;                [FREE.0]HighestDoubleTruth
 ;;                [FREE.0]HighestTripleTruth
@@ -113,7 +161,7 @@
 ;;                [FREE.0]HighestHeptaTruth
 ;;
 ;;
-;;               IZ-FUNCTIONS
+;;      B4      IZ-FUNCTIONS
 ;;
 ;;                [FREE.1]IzUncoilLedgerPositionFree
 ;;                [FREE.1]IzUncoilLedgerPositionOccupied
@@ -121,7 +169,8 @@
 ;;                [FREE.2]IzUncoilLedgerPositionWhat
 ;;                [FREE.0]IzIntegerUncoilPosition
 ;;
-;;               MATH
+;;
+;;      B5      MATH
 ;;
 ;;                [FREE.0]Truncate
 ;;                [FREE.0]TruncateToSnake
@@ -139,7 +188,8 @@
 ;;                [FREE.0]GetAurynUncoilTime
 ;;                [FREE.0]GetEliteAurynUncoilTimeByAmount
 ;;
-;;               ACCOUNT MANAGEMENT
+;;
+;;      B6      ACCOUNT MANAGEMENT
 ;;
 ;;                [RUN.C]SpawnSnakeAccount
 ;;                [RUN.C]RotateSnakeGuard
@@ -149,35 +199,40 @@
 ;;                [XXX.R]UpdateSnakeAccountAge
 ;;
 ;;
-;;              SNAPSHOTS
+;;      B7      SNAPSHOTS
 ;;
-;;           ***[1.BurnLedger]
+;;              [BURN LEDGER]
 ;;                GetBurnSupply
-;;           ***[2.SpawnLedger]
+;;
+;;              [SPAWN LEDGER]
 ;;                GetSpawnCounter
 ;;                GetSpawnEpoch
-;;           ***[3.SupplyLedger]
+;;
+;;              [SUPPLY LEDGER]
 ;;                GetSupply
-;;                ----
 ;;                OuroborosSupplyLiquid
 ;;                AurynSupplyLiquid
 ;;                EliteAurynSupplyLiquid
 ;;                VestaSupplyLiquid
-;;           ***[4.UncoilLedgers]
+;;
+;;              [UNCOIL LEDGER]
 ;;                GetUncoilLedgerPositionData
-;;           ***[5.Plebeic/Baronic-Ledgers]
+;;
+;;              [PLEBEIC AND BARONIC LEDGERS]
 ;;                GetAllBaronicBalances
 ;;                SnapshotBaronicColumn
 ;;                ListBaronicColumn
 ;;
-;;              UPDATE LEDGERS
 ;;
-;;           ***[BurnLedger]
+;;      B8      UPDATE LEDGERS
+;;
+;;              [BURN LEDGER]
 ;;                DirectBurningLedgerCredit
 ;;                BurnedSnakePlus
 ;;                RecycledAurynPlus
 ;;                RecycledEliteAurynPlus
-;;           ***[SupplyLedger]
+;;
+;;              [SUPPLY LEDGER]
 ;;                UpdateSupply
 ;;                ----
 ;;                IncreaseSupply
@@ -203,25 +258,26 @@
 ;;                VestedEliteAurynMinus
 ;;                SleepingVestaMinus
 ;;                GoldMinus
-;;           ***[UncoilLedgers]
+;;
+;;              [UNCOIL LEDGER]
 ;;                UpdateUncoilLedgerDataIncoming
 ;;                UpdateUncoilLedgerDataOutgoing
-;;           ***[Plebeic/Baronic-Ledgers]
 ;;
 ;;
-;;              BIRTH
+;;      B9      BIRTH
 ;;
 ;;                SpawnPrimordialSnakes
 ;;                SpawnDailySnakes
 ;;
-;;              MINT Functions
+;;
+;;      B10     MINT Functions
 ;;
 ;;                MintOuroboros
 ;;                MintAuryn
 ;;                MintEliteAuryn
 ;;
 ;;
-;;              BURN Functions
+;;      B11     BURN Functions
 ;;
 ;;                BurnOuroboros
 ;;                BurnAuryn
@@ -235,7 +291,8 @@
 ;;                RecycleAurynToSnakeDAO
 ;;                RecycleAurynToSubsidiaryStaking
 ;;
-;;              VESTING Functions
+;;
+;;      B12     VESTING Functions
 ;;
 ;;                GetCurrentEpochAuto
 ;;                GetCurrentEpochManual
@@ -251,7 +308,7 @@
 ;;                MergeVestedEliteAuryn
 ;;
 ;;
-;;              COIL-UNCOIL Functions
+;;      B13     COIL-UNCOIL Functions
 ;;
 ;;                CoilOuroboros
 ;;                CoilAuryn
@@ -281,11 +338,9 @@
 ;;                ReversePositionStatus
 ;;                LockEliteAurynUncoilLedgerPosition
 ;;                UnlockEliteAurynUncoilLedgerPosition
-;;                ===
-
 ;;
 ;;
-;;              TRANSFER FUNCTIONS
+;;      B14     TRANSFER FUNCTIONS
 ;;
 ;;                [T0]AbsoluteTransfer
 ;;                [T0]AbsoluteTransferAnew
@@ -393,144 +448,51 @@
 ;;                [T6]RawDebitPlebeicGold
 ;;                [T6]RawDebitPlebeicUnity
 ;;
-
-
+;;
+;;      B15     REPL USAGE FUNCTIONS
 ;;                DisplayAccountBSL
 ;;                DisplayAccountAUL
 ;;                DisplayAccountEAUL
 ;;                DisplayBL
 ;;                DisplaySL
 ;;
-;; PART 02      CREATE TABLES
-;;
 ;;==============================================================================
 ;;
+;; PART C      [CREATE TABLES]
 ;;
+;;==============================================================================
+;;==============================================================================
 ;;
 (module DHOuroboros  BARONIC_RULE
   @doc "DHOuroboros represents the Demiourgos.Holdings Smart-Contract module that governs\
         \all Snake Token (Ouroboros, Auryn, Elite-Auryn) functions accross the Kaden Multichain"
-;;==============================================================================
-;;
 ;;
 ;;==============================================================================
-;; PART 00.1 - CAPABILITIES
 ;;
-;;  Generic Capabilities
-;;  ====================
+;;  PART A1 - CAPABILITIES
+;;
+;;==============================================================================
+;;No Tier Capabilities
   (defcap BARONIC_RULE ()
-    ;true
+    @doc "TIER -1 Capability"
     (enforce-guard (keyset-ref-guard KEY_DEMIURG))
   )
 
   (defcap MASTERMINTER ()
-    @doc "Only the MINTER_KEYSET is master minter"
+    @doc "TIER -1 Capability \
+    \ Only the MINTER_KEYSET is master minter"
     (enforce-keyset KEY_MINTER)
   )
 
-  (defcap ROTATE (account:string)
-    @doc "Autonomously managed capability for snake guard rotation"
-    @managed
-    true
-  )
-
   (defcap ADMIN ()
-    @doc "A guard for admin-only actions, restricted to the free.DH-Master-Keyset keyset."
+    @doc "TIER -1 Capability \
+    \ A guard for admin-only actions, restricted to the free.DH-Master-Keyset keyset."
     (enforce-guard (keyset-ref-guard KEY_DEMIURG))
-    ;(enforce-keyset "free.DH-Master-Keyset")
   )
-
-  (defcap MINT_AURYN (account:string)
-    (compose-capability (CREDIT_EXISTING account true))
-    (compose-capability (UPDATE_SUPPLY))
-  )
-
-  (defcap MINT_ELITE-AURYN (account:string)
-    (compose-capability (CREDIT_EXISTING_ELITE account true))
-    (compose-capability (UPDATE_SUPPLY))
-  )
-
-  (defcap BURN_AURYN (account:string)
-    (compose-capability (DEBIT_EXISTING account))
-    (compose-capability (UPDATE_SUPPLY))
-  )
-
-  (defcap BURN_ELITE-AURYN (account:string)
-    (compose-capability (DEBIT_EXISTING_ELITE account))
-    (compose-capability (UPDATE_SUPPLY))
-  )
-
-  ;;1/6 Morph Capabilty = COIL_OUROBOROS
-  (defcap COIL_OUROBOROS:bool (sender:string amount:decimal)
-    @doc "The 1st Morph Capability \
-    \ Capability for managing the Coil Ouroboros operation."
-    (compose-capability (DEBIT_EXISTING  sender))
-    (compose-capability (CREDIT_EXISTING  AUTO_STAKING true))
-    (compose-capability (MINT_AURYN sender))
-  )
-
-  ;;2/6 Morph Capabilty = COIL_AURYN
-  (defcap COIL_AURYN:bool (sender:string)
-    @doc "The 2nd Morph Capability \
-    \ Capability for managing the Coil Auryn operation."
-    (compose-capability (DEBIT_EXISTING  sender))
-    (compose-capability (CREDIT_EXISTING ELITE_HOLD true))
-    (compose-capability (MINT_ELITE-AURYN sender))
-  )
-
-  ;;3/6 Morph Capabilty = UNCOIL_AURYN
-  (defcap UNCOIL_AURYN:bool (sender:string)
-    @doc "The 3rd Morph Capability \
-    \ Capability for managing the initialization \
-    \ of the Uncoil Auryn operation."
-
-    (compose-capability (BURN_AURYN  sender))
-    (compose-capability (RAW_DEBIT AUTO_STAKING))
-    (compose-capability (BURN_UNCOIL-FEE sender))
-    (compose-capability (CREDIT_EXISTING  UNCOIL_HOLD true))
-    (compose-capability (UPDATE_UNCOIL-LEDGERS))
-  )
-
-  ;;4/6 Morph Capabilty = UNCOIL_AURYN-HARVEST
-  (defcap UNCOIL_AURYN-HARVEST:bool (sender:string)
-    @doc "The 4th Morph Capability \
-    \ Capability for managing the finalization \
-    \ of the Uncoil Auryn operation."
-    (compose-capability (RAW_DEBIT UNCOIL_HOLD))
-    (compose-capability (CREDIT_EXISTING  sender true))
-    (compose-capability (UPDATE_UNCOIL-LEDGERS))
-  )
-
-  ;;5/6 Morph Capabilty = UNCOIL_ELITE-AURYN
-  (defcap UNCOIL_ELITE-AURYN:bool (sender:string)
-    @doc "The 5th Morph Capability \
-    \ Capability for managing the initialization \
-    \ of the Uncoil Elite-Auryn operation."
-    (compose-capability (BURN_ELITE-AURYN sender))
-    (compose-capability (RAW_DEBIT ELITE_HOLD))
-    (compose-capability (CREDIT_EXISTING UNCOIL_HOLD true))
-  )
-
-  ;;6/6 Morph Capabilty = UNCOIL_ELITE-AURYN-HARVEST
-  (defcap UNCOIL_ELITE-AURYN-HARVEST:bool (sender:string)
-    @doc "The 6th Morph Capability \
-    \ Capability for managing the finalization \
-    \ of the Uncoil Elite-Auryn operation."
-    (compose-capability (RAW_DEBIT UNCOIL_HOLD))
-    (compose-capability (CREDIT_EXISTING sender true))
-    (compose-capability (UPDATE_UNCOIL-LEDGERS))
-  )
-
-  (defcap UPDATE-ALL_AGE ()
-    (compose-capability (UPDATE_AGE))
-  )
-  (defcap UPDATE_AGE ()
-    true
-  )
-;;++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  ;; CAPABILITIES V2
+  ;;============================================================================
+  ;; Update Tier 0 Capabilities
   (defcap IZSNAKE:bool (account:string existance:bool)
-    @doc "TIER 2 Capability \
+    @doc "TIER 0 Capability \
     \ Capability that enforces the existance or non-existance of a Snake account\
     \ <true> existance, means the existance of a Snake Account is enforced\
     \ <false> existance, means the non-existance of a Snake Account is enforced"
@@ -554,78 +516,184 @@
       )
     )
   )
-
+  (defcap ROTATE (account:string)
+    @doc "TIER 0 Capability \
+    \ Autonomously managed capability for snake guard rotation"
+    @managed
+    true
+  )
+  (defcap UPDATE_AGE ()
+    @doc "TIER 0 Capability"
+    true
+  )
   (defcap UPDATE_UNCOIL-LEDGERS ()
     @doc "TIER 0 Capability"
     true
+  )
+  (defcap UPDATE_SUPPLY ()
+    @doc "TIER 0 Capability"
+    true
+  )
+  (defcap RAW_BURN ()
+    @doc "TIER 0 Capability"
+    true
+  )
+  ;;Recycle Tier 0 Capabilities
+  (defcap RECYCLE_TO_CODINGDIVISION ()
+    @doc "TIER 0 Capability"
+    true
+  )
+  (defcap RECYCLE_TO_LIQUIDITYFARMING ()
+    @doc "TIER 0 Capability"
+    true
+  )
+  (defcap RECYCLE_TO_SHAREHOLDERS ()
+    @doc "TIER 0 Capability"
+    true
+  )
+  (defcap RECYCLE_TO_SNAKEDAO ()
+    @doc "TIER 0 Capability"
+    true
+  )
+  (defcap RECYCLE_TO_SUBSIDIARY ()
+    @doc "TIER 0 Capability"
+    true
+  )
+  ;;Tier 1 Capabilities
+  (defcap UPDATE-ALL_AGE ()
+    @doc "TIER 1 Capability"
+    (compose-capability (UPDATE_AGE))
   )
   (defcap FIX_ELITE ()
     @doc "TIER 1 Capability"
     (compose-capability (UPDATE_UNCOIL-LEDGERS))
   )
-  ;;Credit Capabilities
-  (defcap RAW_CREDIT (receiver:string)
+  ;;============================================================================
+  ;;BURN/MINT Capabilities
+  ;;BURN
+  (defcap BURN_OUROBOROS (account:string)
+    @doc "TIER 3 Capability"
+    (compose-capability (DEBIT_EXISTING account))
+    (compose-capability (DIRECT_BURN))
+    (compose-capability (CREDIT_EXISTING account true))
+    (compose-capability (UPDATE_SUPPLY))
+  )
+  (defcap BURN_UNCOIL-FEE (account:string)
+    @doc "TIER 3 Capability"
+    (compose-capability (RAW_DEBIT AUTO_STAKING))
+    (compose-capability (DIRECT_BURN))
+    (compose-capability (CREDIT_EXISTING AUTO_STAKING true))
+    (compose-capability (CREDIT_EXISTING account true))
+    (compose-capability (UPDATE_SUPPLY))
+  )
+  (defcap BURN_AURYN (account:string)
+    @doc "TIER 3 Capability"
+    (compose-capability (DEBIT_EXISTING account))
+    (compose-capability (UPDATE_SUPPLY))
+  )
+  (defcap BURN_ELITE-AURYN (account:string)
+    @doc "TIER 3 Capability"
+    (compose-capability (DEBIT_EXISTING_ELITE account))
+    (compose-capability (UPDATE_SUPPLY))
+  )
+  (defcap RECYCLE_AURYNS ()
     @doc "TIER 1 Capability"
-    (enforce (!= receiver "") "Valid Receiver for creditation!")
+    (compose-capability (RAW_CREDIT DAO_CODINGDIVISION))
+    (compose-capability (RAW_CREDIT LIQUIDITY_FARMING))
+    (compose-capability (RAW_CREDIT SHAREHOLDERS))
+    (compose-capability (RAW_CREDIT DAO_SNAKE))
+    (compose-capability (RAW_CREDIT SUBSIDIARY_STAKING))
+    (compose-capability (RECYCLE_TO_CODINGDIVISION))
+    (compose-capability (RECYCLE_TO_LIQUIDITYFARMING))
+    (compose-capability (RECYCLE_TO_SHAREHOLDERS))
+    (compose-capability (RECYCLE_TO_SNAKEDAO))
+    (compose-capability (RECYCLE_TO_SUBSIDIARY))
   )
-  (defcap DIRECT_CREDIT (receiver:string)
-    @doc "TIER 2 Capability"
-    (compose-capability (RAW_CREDIT receiver))
-  )
-  (defcap DIRECT_CREDIT_ELITE (receiver:string)
-    @doc "TIER 2 Capability"
-    (compose-capability (RAW_CREDIT receiver))
-    (compose-capability (FIX_ELITE))
-  )
-  (defcap CREDIT_EXISTING (receiver:string existance:bool)
-    @doc "TIER 3 Capability"
-    (compose-capability (DIRECT_CREDIT receiver))
-    (if (= existance true)
-      (compose-capability (IZSNAKE receiver true))
-      (compose-capability (IZSNAKE receiver false))
-    )
-  )
-  (defcap CREDIT_EXISTING_ELITE (receiver:string existance:bool)
-    @doc "TIER 3 Capability"
-    (compose-capability (DIRECT_CREDIT_ELITE receiver))
-    (if (= existance true)
-      (compose-capability (IZSNAKE receiver true))
-      (compose-capability (IZSNAKE receiver false))
-    )
-  )
-  ;;Debit Capabilities
-  (defcap RAW_DEBIT (sender:string)
+  (defcap DIRECT_BURN ()
     @doc "TIER 1 Capability"
-    (enforce (!= sender "") "Valid Sender for Debitation!")
+    (compose-capability (RAW_BURN))
   )
-  (defcap DIRECT_DEBIT (sender:string)
-    @doc "TIER 2 Capability"
-    (enforce-guard (at "Guard" (read PlebeicSnakeLedger sender)))
-    (compose-capability (RAW_DEBIT sender))
-  )
-  (defcap DIRECT_DEBIT_ELITE (sender:string)
-    @doc "TIER 2 Capability"
-    (enforce-guard (at "Guard" (read PlebeicSnakeLedger sender)))
-    (compose-capability (RAW_DEBIT sender))
-    (compose-capability (FIX_ELITE))
-  )
-  (defcap DEBIT_EXISTING (sender:string)
-    @doc "TIER 3 Capability"
-    (compose-capability (DIRECT_DEBIT sender))
-    (compose-capability (IZSNAKE sender true))
-  )
-  (defcap DEBIT_EXISTING_ELITE (sender:string)
-    @doc "TIER 3 Capability"
-    (compose-capability (DIRECT_DEBIT_ELITE sender))
-    (compose-capability (IZSNAKE sender true))
-  )
-
+  ;;MINT
   (defcap MINT_OUROBOROS (account:string)
+    @doc "TIER 3 Capability"
     (compose-capability (MASTERMINTER))
     (compose-capability (CREDIT_EXISTING account true))
     (compose-capability (UPDATE_SUPPLY))
   )
-
+  (defcap MINT_AURYN (account:string)
+    @doc "TIER 3 Capability"
+    (compose-capability (CREDIT_EXISTING account true))
+    (compose-capability (UPDATE_SUPPLY))
+  )
+  (defcap MINT_ELITE-AURYN (account:string)
+    @doc "TIER 3 Capability"
+    (compose-capability (CREDIT_EXISTING_ELITE account true))
+    (compose-capability (UPDATE_SUPPLY))
+  )
+  ;;============================================================================
+  ;;COIL/UNCOIL Capabilities
+  ;;1/6 Morph Capabilty = COIL_OUROBOROS
+  (defcap COIL_OUROBOROS:bool (sender:string amount:decimal)
+    @doc "TIER 4 Capability \
+    \ The 1st Morph Capability \
+    \ Capability for managing the Coil Ouroboros operation."
+    (compose-capability (DEBIT_EXISTING  sender))
+    (compose-capability (CREDIT_EXISTING  AUTO_STAKING true))
+    (compose-capability (MINT_AURYN sender))
+  )
+  ;;2/6 Morph Capabilty = COIL_AURYN
+  (defcap COIL_AURYN:bool (sender:string)
+    @doc "TIER 4 Capability \
+    \ The 2nd Morph Capability \
+    \ Capability for managing the Coil Auryn operation."
+    (compose-capability (DEBIT_EXISTING  sender))
+    (compose-capability (CREDIT_EXISTING ELITE_HOLD true))
+    (compose-capability (MINT_ELITE-AURYN sender))
+  )
+  ;;3/6 Morph Capabilty = UNCOIL_AURYN
+  (defcap UNCOIL_AURYN:bool (sender:string)
+    @doc "TIER 4 Capability \
+    \ The 3rd Morph Capability \
+    \ Capability for managing the initialization \
+    \ of the Uncoil Auryn operation."
+    (compose-capability (BURN_AURYN  sender))
+    (compose-capability (RAW_DEBIT AUTO_STAKING))
+    (compose-capability (BURN_UNCOIL-FEE sender))
+    (compose-capability (CREDIT_EXISTING  UNCOIL_HOLD true))
+    (compose-capability (UPDATE_UNCOIL-LEDGERS))
+  )
+  ;;4/6 Morph Capabilty = UNCOIL_AURYN-HARVEST
+  (defcap UNCOIL_AURYN-HARVEST:bool (sender:string)
+    @doc "TIER 4 Capability \
+    \ The 4th Morph Capability \
+    \ Capability for managing the finalization \
+    \ of the Uncoil Auryn operation."
+    (compose-capability (RAW_DEBIT UNCOIL_HOLD))
+    (compose-capability (CREDIT_EXISTING  sender true))
+    (compose-capability (UPDATE_UNCOIL-LEDGERS))
+  )
+  ;;5/6 Morph Capabilty = UNCOIL_ELITE-AURYN
+  (defcap UNCOIL_ELITE-AURYN:bool (sender:string)
+    @doc "TIER 4 Capability \
+    \ The 5th Morph Capability \
+    \ Capability for managing the initialization \
+    \ of the Uncoil Elite-Auryn operation."
+    (compose-capability (BURN_ELITE-AURYN sender))
+    (compose-capability (RAW_DEBIT ELITE_HOLD))
+    (compose-capability (CREDIT_EXISTING UNCOIL_HOLD true))
+  )
+  ;;6/6 Morph Capabilty = UNCOIL_ELITE-AURYN-HARVEST
+  (defcap UNCOIL_ELITE-AURYN-HARVEST:bool (sender:string)
+    @doc "TIER 4 Capability \
+    \ The 6th Morph Capability \
+    \ Capability for managing the finalization \
+    \ of the Uncoil Elite-Auryn operation."
+    (compose-capability (RAW_DEBIT UNCOIL_HOLD))
+    (compose-capability (CREDIT_EXISTING sender true))
+    (compose-capability (UPDATE_UNCOIL-LEDGERS))
+  )
+  ;;============================================================================
+  ;;COMPOSED SPAWNING Capabilities
   (defcap GENESIS_SPAWN (account:string)
     @doc "TIER 3 Capability"
     (compose-capability (MINT_OUROBOROS account))
@@ -653,7 +721,73 @@
     (compose-capability (DEBIT_EXISTING SNAKE_STAKING))
     (compose-capability (DEBIT_EXISTING VEGLD_STAKING))
   )
-
+  ;;============================================================================
+  ;;CREDIT Capabilities
+  ;;Tier 1
+  (defcap RAW_CREDIT (receiver:string)
+    @doc "TIER 1 Capability"
+    (enforce (!= receiver "") "Valid Receiver for creditation!")
+  )
+  ;;Tier 2
+  (defcap DIRECT_CREDIT (receiver:string)
+    @doc "TIER 2 Capability"
+    (compose-capability (RAW_CREDIT receiver))
+  )
+  (defcap DIRECT_CREDIT_ELITE (receiver:string)
+    @doc "TIER 2 Capability"
+    (compose-capability (RAW_CREDIT receiver))
+    (compose-capability (FIX_ELITE))
+  )
+  ;;Tier 3
+  (defcap CREDIT_EXISTING (receiver:string existance:bool)
+    @doc "TIER 3 Capability"
+    (compose-capability (DIRECT_CREDIT receiver))
+    (if (= existance true)
+      (compose-capability (IZSNAKE receiver true))
+      (compose-capability (IZSNAKE receiver false))
+    )
+  )
+  (defcap CREDIT_EXISTING_ELITE (receiver:string existance:bool)
+    @doc "TIER 3 Capability"
+    (compose-capability (DIRECT_CREDIT_ELITE receiver))
+    (if (= existance true)
+      (compose-capability (IZSNAKE receiver true))
+      (compose-capability (IZSNAKE receiver false))
+    )
+  )
+  ;;============================================================================
+  ;;DEBIT Capabilities
+  ;;Tier 1
+  (defcap RAW_DEBIT (sender:string)
+    @doc "TIER 1 Capability"
+    (enforce (!= sender "") "Valid Sender for Debitation!")
+  )
+  ;;Tier 2
+  (defcap DIRECT_DEBIT (sender:string)
+    @doc "TIER 2 Capability"
+    (enforce-guard (at "Guard" (read PlebeicSnakeLedger sender)))
+    (compose-capability (RAW_DEBIT sender))
+  )
+  (defcap DIRECT_DEBIT_ELITE (sender:string)
+    @doc "TIER 2 Capability"
+    (enforce-guard (at "Guard" (read PlebeicSnakeLedger sender)))
+    (compose-capability (RAW_DEBIT sender))
+    (compose-capability (FIX_ELITE))
+  )
+  ;;Tier 3
+  (defcap DEBIT_EXISTING (sender:string)
+    @doc "TIER 3 Capability"
+    (compose-capability (DIRECT_DEBIT sender))
+    (compose-capability (IZSNAKE sender true))
+  )
+  (defcap DEBIT_EXISTING_ELITE (sender:string)
+    @doc "TIER 3 Capability"
+    (compose-capability (DIRECT_DEBIT_ELITE sender))
+    (compose-capability (IZSNAKE sender true))
+  )
+  ;;============================================================================
+  ;;TRANSFER Capabilities
+  ;;Tier 3
   (defcap TRANSFER (sender:string receiver:string existance:bool)
     @doc "TIER 3 Capability"
     (enforce (!= sender receiver) "When transfering sender cannot be the receiver!")
@@ -666,6 +800,7 @@
     (compose-capability (DEBIT_EXISTING_ELITE sender))
     (compose-capability (CREDIT_EXISTING_ELITE receiver existance))
   )
+  ;;Tier 4
   (defcap TRANSFER_NOFEE (sender:string receiver:string existance:bool)
     @doc "TIER 4 Capability"
     (compose-capability (TRANSFER sender receiver existance))
@@ -684,69 +819,9 @@
     (compose-capability (DIRECT_BURN))
     (compose-capability (CREDIT_EXISTING sender true))
   )
-
-
-  (defcap RECYCLE_AURYNS ()
-    @doc "TIER 1 Capability"
-    (compose-capability (RAW_CREDIT DAO_CODINGDIVISION))
-    (compose-capability (RAW_CREDIT LIQUIDITY_FARMING))
-    (compose-capability (RAW_CREDIT SHAREHOLDERS))
-    (compose-capability (RAW_CREDIT DAO_SNAKE))
-    (compose-capability (RAW_CREDIT SUBSIDIARY_STAKING))
-    (compose-capability (RECYCLE_TO_CODINGDIVISION))
-    (compose-capability (RECYCLE_TO_LIQUIDITYFARMING))
-    (compose-capability (RECYCLE_TO_SHAREHOLDERS))
-    (compose-capability (RECYCLE_TO_SNAKEDAO))
-    (compose-capability (RECYCLE_TO_SUBSIDIARY))
-  )
-  (defcap RECYCLE_TO_CODINGDIVISION ()
-    @doc "TIER 0 Capability"
-    true
-  )
-  (defcap RECYCLE_TO_LIQUIDITYFARMING ()
-    @doc "TIER 0 Capability"
-    true
-  )
-  (defcap RECYCLE_TO_SHAREHOLDERS ()
-    @doc "TIER 0 Capability"
-    true
-  )
-  (defcap RECYCLE_TO_SNAKEDAO ()
-    @doc "TIER 0 Capability"
-    true
-  )
-  (defcap RECYCLE_TO_SUBSIDIARY ()
-    @doc "TIER 0 Capability"
-    true
-  )
-
-  (defcap BURN_OUROBOROS (account:string)
-    @doc "TIER 3 Capability"
-    (compose-capability (DEBIT_EXISTING account))
-    (compose-capability (DIRECT_BURN))
-    (compose-capability (CREDIT_EXISTING account true))
-    (compose-capability (UPDATE_SUPPLY))
-  )
-  (defcap BURN_UNCOIL-FEE (account:string)
-    @doc "TIER 3 Capability"
-    (compose-capability (RAW_DEBIT AUTO_STAKING))
-    (compose-capability (DIRECT_BURN))
-    (compose-capability (CREDIT_EXISTING AUTO_STAKING true))
-    (compose-capability (CREDIT_EXISTING account true))
-    (compose-capability (UPDATE_SUPPLY))
-  )
-  (defcap RAW_BURN ()
-    @doc "TIER 1 Capability"
-    true
-  )
-  (defcap DIRECT_BURN ()
-    @doc "TIER 2 Capability"
-    (compose-capability (RAW_BURN))
-  )
-  (defcap UPDATE_SUPPLY ()
-    true
-  )
-
+  ;;============================================================================
+  ;;HEROTAG Capabilities
+  ;;Tier 4
   (defcap NEWHEROTAG (account:string)
     @doc "TIER 4 Capability"
     (compose-capability (BURN_OUROBOROS account))
@@ -754,9 +829,9 @@
 ;;
 ;;==============================================================================
 ;;
+;;  A2 - CONSTANTS
 ;;
 ;;==============================================================================
-;; PART 00.2 - CONSTANTS
 ;;
   (defconst SNAKE_COUNT "snake-count")
   (defconst PRIMORDIALSWAPN false)
@@ -995,12 +1070,13 @@
    "Unity" "Equity" "Vesta"])
   (defconst SUPPLY_LIST_MINUS (take 8 SUPPLY_LIST_PLUS))
   (defconst BURN_TOKENS ["BurnedSnake" "RecycledAuryn" "RecycledEliteAuryn"])
-;;==============================================================================
-;;
 ;;
 ;;==============================================================================
-;; PART 00.3 - Schemas and Table Definitions
 ;;
+;;  PART A3 - CAPABILITIES
+;;
+;;==============================================================================
+;;Schemas and Table Definitions
   (defschema PlebeicSnakeTokenLedgerSchema
     @doc "The multichain Snake Token Ledger"
 
@@ -1122,6 +1198,13 @@
 
   (deftable SupplyLedger:{SupplySchema})
 ;;
+;;
+;;==============================================================================
+;;
+;;  PART B  - FUNCTIONS
+;;
+;;==============================================================================
+;;No Tier Capabilities
 ;;INITIALISATION
 ;;==============================================================================
   (defun BirthSnakes ()
