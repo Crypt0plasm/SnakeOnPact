@@ -109,43 +109,51 @@
 ;;
 ;;
 ;; PART B      [FUNCTIONS]
-;;
+;;                [F.INTR] - No restriction Function, used for internal computations
+;;                [F.USER] - No restriction Function, used by the USERs.
+;;                [MINTER] - Restricted Function, used only by MASTERMINTER
+;;                [ADMIN.] - Restricted Function, used only bz ADMIN.
+;;                [xxxCAP] - Restricted Function, used for internal computations,
+;;                           Protected by different capabilities that must be aquired beforehand.
+;;                [xxxxxx] - Restricted Function, doesnt require directly a Capability
+;;                           But its internal functions require capabilities
+;;                [xxREPL] - Functions used in the repl
 ;;
 ;; PART B1      INITIALISATION
 ;;
-;;                [RUN.C]BirthSnakes
-;;                [XXX.R]SpawnMintingCounter
-;;                [XXX.R]SpawnBurningCounter
-;;                [XXX.R]SpawnSupplyCounter
+;;                [ADMIN.]BirthSnakes
+;;                [xxxCAP]SpawnMintingCounter
+;;                [xxxCAP]SpawnBurningCounter
+;;                [xxxCAP]SpawnSupplyCounter
 ;;
 ;;
 ;;      B2      VALIDATION
 ;;
-;;                [FREE.0]EnforceSnakePrecision
-;;                [FREE.0]ValidateAccount
-;;                [FREE.0]ValidateAccountForTransfers
-;;                [FREE.1]ValidateSenderReceiverForTransfers
-;;                [FREE.1]ValidateAccountWithTransferWithPosition
-;;                [FREE.1]ValidateAccountWithAmountComplex
-;;                [FREE.1]ValidateAccountWithAmountSimple
+;;                [F.INTR]EnforceSnakePrecision
+;;                [F.INTR]ValidateAccount
+;;                [F.INTR]ValidateAccountForTransfers
+;;                [F.INTR]ValidateSenderReceiverForTransfers
+;;                [F.INTR]ValidateAccountWithTransferWithPosition
+;;                [F.INTR]ValidateAccountWithAmountComplex
+;;                [F.INTR]ValidateAccountWithAmountSimple
 ;;                -------
-;;                [FREE.0]EnforceAmount
-;;                [FREE.0]EnforceBurningLedgerType
-;;                [FREE.1]EnforceCreditDebitLedgerString
-;;                [FREE.0]EnforceCreditDebitString
-;;                [FREE.0]EnforceLedgerString
-;;                [FREE.0]EnforcePositiveSupplyToken
-;;                [FREE.0]EnforceNegativeSupplyToken
+;;                [F.INTR]EnforceAmount
+;;                [F.INTR]EnforceBurningLedgerType
+;;                [F.INTR]EnforceCreditDebitLedgerString
+;;                [F.INTR]EnforceCreditDebitString
+;;                [F.INTR]EnforceLedgerString
+;;                [F.INTR]EnforcePositiveSupplyToken
+;;                [F.INTR]EnforceNegativeSupplyToken
 ;;                -------
-;;                [FREE.1]ValidateHerotag
-;;                [FREE.0]Enforce-HT-Syntax
-;;                [FREE.0]Enforce-HT-Uniqueness
-;;                [FREE.0]Enforce-Latin-1
-;;                [FREE.0]Enforce-Length
+;;                [F.INTR]ValidateHerotag
+;;                [F.INTR]Enforce-HT-Syntax
+;;                [F.INTR]Enforce-HT-Uniqueness
+;;                [F.INTR]Enforce-Latin-1
+;;                [F.INTR]Enforce-Length
 ;;                -------
-;;                [FREE.0]EnforcePlebeicTokenType
-;;                [FREE.0]EnforceBaronicCreditTokenType
-;;                [FREE.0]EnforceBaronicDebitTokenType
+;;                [F.INTR]EnforcePlebeicTokenType
+;;                [F.INTR]EnforceBaronicCreditTokenType
+;;                [F.INTR]EnforceBaronicDebitTokenType
 ;;                ---
 ;;                enforce-reserved
 ;;                check-reserved
@@ -153,308 +161,318 @@
 ;;
 ;;      B3      LISTS
 ;;
-;;                [FREE.0]HighestDoubleTruth
-;;                [FREE.0]HighestTripleTruth
-;;                [FREE.0]HighestQuadTruth
-;;                [FREE.0]HighestPentaTruth
-;;                [FREE.0]HighestHexaTruth
-;;                [FREE.0]HighestHeptaTruth
+;;                [F.INTR]HighestDoubleTruth
+;;                [F.INTR]HighestTripleTruth
+;;                [F.INTR]HighestQuadTruth
+;;                [F.INTR]HighestPentaTruth
+;;                [F.INTR]HighestHexaTruth
+;;                [F.INTR]HighestHeptaTruth
 ;;
 ;;
 ;;      B4      IZ-FUNCTIONS
 ;;
-;;                [FREE.1]IzUncoilLedgerPositionFree
-;;                [FREE.1]IzUncoilLedgerPositionOccupied
-;;                [FREE.1]IzUncoilLedgerPositionLocked
-;;                [FREE.2]IzUncoilLedgerPositionWhat
-;;                [FREE.0]IzIntegerUncoilPosition
+;;                [F.INTR]IzUncoilLedgerPositionFree
+;;                [F.INTR]IzUncoilLedgerPositionOccupied
+;;                [F.INTR]IzUncoilLedgerPositionLocked
+;;                [F.INTR]IzUncoilLedgerPositionWhat
+;;                [F.INTR]IzIntegerUncoilPosition
 ;;
 ;;
 ;;      B5      MATH
 ;;
-;;                [FREE.0]Truncate
-;;                [FREE.0]TruncateToSnake
-;;                [FREE.0]TruncateToUnity
-;;                [FREE.0]ComputeDailySpawnAmount
-;;                [FREE.0]GetAuryndex
-;;                [FREE.0]MakePercent
-;;                [FREE.0]MakePermille
+;;                [F.INTR]Truncate
+;;                [F.INTR]TruncateToSnake
+;;                [F.INTR]TruncateToUnity
+;;                [F.INTR]ComputeDailySpawnAmount
+;;                [F.INTR]GetAuryndex
+;;                [F.INTR]MakePercent
+;;                [F.INTR]MakePermille
 ;;                ---
-;;                [FREE.0]TierName
-;;                [FREE.0]Tier
-;;                [FREE.0]TierBoost
+;;                [F.INTR]TierName
+;;                [F.INTR]Tier
+;;                [F.INTR]TierBoost
 ;;                ---
-;;                [FREE.0]GetAurynUncoilFee
-;;                [FREE.0]GetAurynUncoilTime
-;;                [FREE.0]GetEliteAurynUncoilTimeByAmount
+;;                [F.INTR]GetAurynUncoilFee
+;;                [F.INTR]GetAurynUncoilTime
+;;                [F.INTR]GetEliteAurynUncoilTimeByAmount
 ;;
 ;;
 ;;      B6      ACCOUNT MANAGEMENT
 ;;
-;;                [RUN.C]SpawnSnakeAccount
-;;                [RUN.C]RotateSnakeGuard
-;;                [RUN.C]UpdateSnakeAccountHeroTag
-;;                [XXX.R]UpdateHeroTag
-;;                [XXX.R]UpdateAllSnakeAccountAge
-;;                [XXX.R]UpdateSnakeAccountAge
+;;                [F.USER]SpawnSnakeAccount
+;;                [F.USER]RotateSnakeGuard
+;;                [F.USER]UpdateSnakeAccountHeroTag
+;;                [xxxCAP]UpdateHeroTag
+;;                [xxxCAP]UpdateAllSnakeAccountAge
+;;                [xxxCAP]UpdateSnakeAccountAge
 ;;
 ;;
 ;;      B7      SNAPSHOTS
 ;;
 ;;              [BURN LEDGER]
-;;                GetBurnSupply
+;;                [F.INTR]GetBurnSupply
 ;;
 ;;              [SPAWN LEDGER]
-;;                GetSpawnCounter
-;;                GetSpawnEpoch
+;;                [F.INTR]GetSpawnCounter
+;;                [F.INTR]GetSpawnEpoch
 ;;
 ;;              [SUPPLY LEDGER]
-;;                GetSupply
-;;                OuroborosSupplyLiquid
-;;                AurynSupplyLiquid
-;;                EliteAurynSupplyLiquid
-;;                VestaSupplyLiquid
+;;                [F.INTR]GetSupply
+;;                [F.INTR]OuroborosSupplyLiquid
+;;                [F.INTR]AurynSupplyLiquid
+;;                [F.INTR]EliteAurynSupplyLiquid
+;;                [F.INTR]VestaSupplyLiquid
 ;;
 ;;              [UNCOIL LEDGER]
-;;                GetUncoilLedgerPositionData
+;;                [F.INTR]GetUncoilLedgerPositionData
 ;;
 ;;              [PLEBEIC AND BARONIC LEDGERS]
-;;                GetAllBaronicBalances
-;;                SnapshotBaronicColumn
-;;                ListBaronicColumn
+;;                [F.INTR]GetAllBaronicBalances
+;;                [F.INTR]SnapshotBaronicColumn
+;;                [F.INTR]ListBaronicColumn
 ;;
 ;;
 ;;      B8      UPDATE LEDGERS
 ;;
 ;;              [BURN LEDGER]
-;;                DirectBurningLedgerCredit
-;;                BurnedSnakePlus
-;;                RecycledAurynPlus
-;;                RecycledEliteAurynPlus
+;;                [xxxxxx]DirectBurningLedgerCredit
+;;                [xxxCAP]BurnedSnakePlus
+;;                [xxxCAP]RecycledAurynPlus
+;;                [xxxCAP]RecycledEliteAurynPlus
 ;;
 ;;              [SUPPLY LEDGER]
-;;                UpdateSupply
+;;                [xxxxxx]UpdateSupply
 ;;                ----
-;;                IncreaseSupply
-;;                OuroborosPlus
-;;                AurynPlus
-;;                EliteAurynPlus
-;;                VestedOuroborosPlus
-;;                VestedAurynPlus
-;;                VestedEliteAurynPlus
-;;                VestaPlus
-;;                SleepingVestaPlus
-;;                FrozenVestaPlus
-;;                GoldPlus
-;;                UnityPlus
-;;                EquityPlus
+;;                [xxxxxx]IncreaseSupply
+;;                [xxxCAP]OuroborosPlus
+;;                [xxxCAP]AurynPlus
+;;                [xxxCAP]EliteAurynPlus
+;;                [xxxCAP]VestedOuroborosPlus
+;;                [xxxCAP]VestedAurynPlus
+;;                [xxxCAP]VestedEliteAurynPlus
+;;                [xxxCAP]VestaPlus
+;;                [xxxCAP]SleepingVestaPlus
+;;                [xxxCAP]FrozenVestaPlus
+;;                [xxxCAP]GoldPlus
+;;                [xxxCAP]UnityPlus
+;;                [xxxCAP]EquityPlus
 ;;                ----
-;;                DecreaseSupply
-;;                OuroborosMinus
-;;                AurynMinus
-;;                EliteAurynMinus
-;;                VestedOuroborosMinus
-;;                VestedAurynMinus
-;;                VestedEliteAurynMinus
-;;                SleepingVestaMinus
-;;                GoldMinus
+;;                [xxxxxx]DecreaseSupply
+;;                [xxxCAP]OuroborosMinus
+;;                [xxxCAP]AurynMinus
+;;                [xxxCAP]EliteAurynMinus
+;;                [xxxCAP]VestedOuroborosMinus
+;;                [xxxCAP]VestedAurynMinus
+;;                [xxxCAP]VestedEliteAurynMinus
+;;                [xxxCAP]SleepingVestaMinus
+;;                [xxxCAP]GoldMinus
 ;;
 ;;              [UNCOIL LEDGER]
-;;                UpdateUncoilLedgerDataIncoming
-;;                UpdateUncoilLedgerDataOutgoing
+;;                [xxxCAP]UpdateUncoilLedgerDataIncoming
+;;                [xxxCAP]UpdateUncoilLedgerDataOutgoing
 ;;
 ;;
 ;;      B9      BIRTH
 ;;
-;;                SpawnPrimordialSnakes
-;;                SpawnDailySnakes
+;;                [MINTER]SpawnPrimordialSnakes
+;;                [MINTER]SpawnDailySnakes
 ;;
 ;;
 ;;      B10     MINT Functions
 ;;
-;;                MintOuroboros
-;;                MintAuryn
-;;                MintEliteAuryn
+;;                [xxxCAP]MintOuroboros
+;;                [xxxCAP]MintAuryn
+;;                [xxxCAP]MintEliteAuryn
 ;;
 ;;
 ;;      B11     BURN Functions
 ;;
-;;                BurnOuroboros
-;;                BurnAuryn
-;;                BurnEliteAuryn
-;;                BurnUncoilFee
+;;                [xxxCAP]BurnOuroboros
+;;                [xxxCAP]BurnAuryn
+;;                [xxxCAP]BurnEliteAuryn
+;;                [xxxCAP]BurnUncoilFee
 ;;                ---
-;;                RecycleAuryns
-;;                RecycleAurynToCodingDivision
-;;                RecycleAurynToLiquidityFarm
-;;                RecycleAurynToShareholders
-;;                RecycleAurynToSnakeDAO
-;;                RecycleAurynToSubsidiaryStaking
+;;                [xxxCAP]RecycleAuryns
+;;                [xxxCAP]RecycleAurynToCodingDivision
+;;                [xxxCAP]RecycleAurynToLiquidityFarm
+;;                [xxxCAP]RecycleAurynToShareholders
+;;                [xxxCAP]RecycleAurynToSnakeDAO
+;;                [xxxCAP]RecycleAurynToSubsidiaryStaking
 ;;
 ;;
 ;;      B12     VESTING Functions
 ;;
-;;                GetCurrentEpochAuto
-;;                GetCurrentEpochManual
+;;                [F.INTR]GetCurrentEpochAuto
+;;                [F.INTR]GetCurrentEpochManual
 ;;                ---
-;;                VestOuroboros
-;;                UnvestOuroboros
-;;                MergeVestedOuroboros
-;;                VestAuryn
-;;                UnvestAuryn
-;;                MergeVestedAuryn
-;;                VestEliteAuryn
-;;                UnvestEliteAuryn
-;;                MergeVestedEliteAuryn
-;;
+;;                [F.USER]VestDemiourgosToken
+;;                [F.USER]UnvestDemiourgosToken
+;;                [F.USER]MergeVestedDemiourgosToken
+;;                ---
+;;                [xxxCAP]VestOuroboros
+;;                [xxxCAP]UnvestOuroboros
+;;                [xxxCAP]MergeVestedOuroboros
+;;                ---
+;;                [xxxCAP]VestAuryn
+;;                [xxxCAP]UnvestAuryn
+;;                [xxxCAP]MergeVestedAuryn
+;;                ---
+;;                [xxxCAP]VestEliteAuryn
+;;                [xxxCAP]UnvestEliteAuryn
+;;                [xxxCAP]MergeVestedEliteAuryn
+;;                ---
+;;                [xxxCAP]SleepVesta
+;;                [xxxCAP]UnvestSleepingVesta
+;;                [xxxCAP]MergeSleepingVesta
 ;;
 ;;      B13     COIL-UNCOIL Functions
 ;;
-;;                CoilOuroboros
-;;                CoilAuryn
+;;                [F.USER]CoilOuroboros
+;;                [F.USER]CoilAuryn
 ;;                ====
-;;                BestUncoilAuryn
-;;                UncoilAurynPosition
-;;                FinalizeUncoilAuryn
-;;                FinalizeUncoilAurynPosition
+;;                [F.USER]BestUncoilAuryn
+;;                [xxxCAP]UncoilAurynPosition
+;;                [F.USER]FinalizeUncoilAuryn
+;;                [xxxCAP]FinalizeUncoilAurynPosition
 ;;                ---
-;;                GetBestAurynUncoilPosition
-;;                GetRipeAurynUncoilPosition
-;;                UpdateAurynUncoilLedgerIncoming
-;;                UpdateAurynUncoilLedgerOutgoing
+;;                [F.INTR]GetBestAurynUncoilPosition
+;;                [F.INTR]GetRipeAurynUncoilPosition
+;;                [xxxxxx]UpdateAurynUncoilLedgerIncoming
+;;                [xxxxxx]UpdateAurynUncoilLedgerOutgoing
 ;;                ===
-;;                BestUncoilEliteAuryn
-;;                UncoilEliteAurynPosition
-;;                FinalizeUncoilEliteAuryn
-;;                FinalizeUncoilEliteAurynPosition
+;;                [F.USER]BestUncoilEliteAuryn
+;;                [xxxCAP]UncoilEliteAurynPosition
+;;                [F.USER]FinalizeUncoilEliteAuryn
+;;                [xxxCAP]FinalizeUncoilEliteAurynPosition
 ;;                ---
-;;                GetBestEliteAurynUncoilPosition
-;;                GetRipeEliteAurynUncoilPosition
-;;                UpdateEliteAurynUncoilLedgerIncoming
-;;                UpdateEliteAurynUncoilLedgerOutgoing
+;;                [F.INTR]GetBestEliteAurynUncoilPosition
+;;                [F.INTR]GetRipeEliteAurynUncoilPosition
+;;                [xxxxxx]UpdateEliteAurynUncoilLedgerIncoming
+;;                [xxxxxx]UpdateEliteAurynUncoilLedgerOutgoing
 ;;                ---
-;;                UpdateEliteAurynUncoilLedgerByElite
-;;                FixPositionByElite
-;;                ReversePositionStatus
-;;                LockEliteAurynUncoilLedgerPosition
-;;                UnlockEliteAurynUncoilLedgerPosition
+;;                [xxxxxx]UpdateEliteAurynUncoilLedgerByElite
+;;                [xxxCAP]FixPositionByElite
+;;                [xxxxxx]ReversePositionStatus
+;;                [xxxxxx]LockEliteAurynUncoilLedgerPosition
+;;                [xxxxxx]UnlockEliteAurynUncoilLedgerPosition
 ;;
 ;;
 ;;      B14     TRANSFER FUNCTIONS
 ;;
-;;                [T0]AbsoluteTransfer
-;;                [T0]AbsoluteTransferAnew
+;;                [F.USER]AbsoluteTransfer
+;;                [F.USER]AbsoluteTransferAnew
 ;;                ===
-;;                [T1]TransmitOuroboros
-;;                [T1]TransmitAuryn
-;;                [T1]TransmitEliteAuryn
-;;                [T1]TransmitVesta
-;;                [T1]TransmitGold
-;;                [T1]TransmitUnity
+;;                [xxxCAP]TransmitOuroboros
+;;                [xxxCAP]TransmitAuryn
+;;                [xxxCAP]TransmitEliteAuryn
+;;                [xxxCAP]TransmitVesta
+;;                [xxxCAP]TransmitGold
+;;                [xxxCAP]TransmitUnity
 ;;                ...
-;;                [T1]TransmitOuroborosAnew
-;;                [T1]TransmitAurynAnew
-;;                [T1]TransmitEliteAurynAnew
-;;                [T1]TransmitVestaAnew
-;;                [T1]TransmitGoldAnew
-;;                [T1]TransmitUnityAnew
+;;                [xxxCAP]TransmitOuroborosAnew
+;;                [xxxCAP]TransmitAurynAnew
+;;                [xxxCAP]TransmitEliteAurynAnew
+;;                [xxxCAP]TransmitVestaAnew
+;;                [xxxCAP]TransmitGoldAnew
+;;                [xxxCAP]TransmitUnityAnew
 ;;                ---
-;;                [T2]RelocateTokensV1
-;;                [T2]RelocateTokensV2
-;;                [T2]RelocateTokensV3
-;;                [T2]RelocateTokensV4
-;;                [T2]RelocateTokensV5
-;;                [T2]RelocateTokensV6
+;;                [xxxCAP]RelocateTokensV1
+;;                [xxxCAP]RelocateTokensV2
+;;                [xxxCAP]RelocateTokensV3
+;;                [xxxCAP]RelocateTokensV4
+;;                [xxxCAP]RelocateTokensV5
+;;                [xxxCAP]RelocateTokensV6
 ;;                ---
-;;                [T3]CreditOuroboros
-;;                [T3]DebitOuroboros
-;;                [T3]CreditAuryn
-;;                [T3]DebitAuryn
-;;                [T3]CreditEliteAuryn
-;;                [T3]DebitEliteAuryn
+;;                [xxxxxx]CreditOuroboros
+;;                [xxxxxx]DebitOuroboros
+;;                [xxxxxx]CreditAuryn
+;;                [xxxxxx]DebitAuryn
+;;                [xxxxxx]CreditEliteAuryn
+;;                [xxxxxx]DebitEliteAuryn
 ;;                ...
-;;                [T3]CreditVestedOuroboros
-;;                [T3]DebitVestedOuroboros
-;;                [T3]CreditVestedAuryn
-;;                [T3]DebitVestedAuryn
-;;                [T3]CreditVestedEliteAuryn
-;;                [T3]DebitVestedEliteAuryn
+;;                [xxxxxx]CreditVestedOuroboros
+;;                [xxxxxx]DebitVestedOuroboros
+;;                [xxxxxx]CreditVestedAuryn
+;;                [xxxxxx]DebitVestedAuryn
+;;                [xxxxxx]CreditVestedEliteAuryn
+;;                [xxxxxx]DebitVestedEliteAuryn
 ;;                ...
-;;                [T3CreditBurnedOuroboros
-;;                [T3CreditBOVA
-;;                [T3CreditRecycledAuryn
-;;                [T3CreditRecycledEliteAuryn
+;;                [xxxxxx]reditBurnedOuroboros
+;;                [xxxxxx]CreditBOVA
+;;                [xxxxxx]CreditRecycledAuryn
+;;                [xxxxxx]CreditRecycledEliteAuryn
 ;;                ...
-;;                [T3]CreditVesta
-;;                [T3]DebitVesta
-;;                [T3]CreditSleepingVesta
-;;                [T3]DebitSleepingVesta
-;;                [T3]CreditFrozenVesta
+;;                [xxxxxx]CreditVesta
+;;                [xxxxxx]DebitVesta
+;;                [xxxxxx]CreditSleepingVesta
+;;                [xxxxxx]DebitSleepingVesta
+;;                [xxxxxx]CreditFrozenVesta
 ;;                ...
-;;                [T3]CreditGold
-;;                [T3]DebitGold
-;;                [T3]CreditUnity
-;;                [T3]DebitUnity
-;;                [T3]CreditEquity
+;;                [xxxxxx]CreditGold
+;;                [xxxxxx]DebitGold
+;;                [xxxxxx]CreditUnity
+;;                [xxxxxx]DebitUnity
+;;                [xxxxxx]CreditEquity
 ;;                ===
-;;                [T4]CreditDemiourgosTokensWithExistance
-;;                [T4]CreditDemiourgosTokens
-;;                [T4]DebitDemiourgosTokens
+;;                [xxxCAP]CreditDemiourgosTokensWithExistance
+;;                [xxxCAP]CreditDemiourgosTokens
+;;                [xxxCAP]DebitDemiourgosTokens
 ;;                ===
-;;                [T5]DirectBaronicCredit
-;;                [T5]DirectBaronicDebit
-;;                [T5]DirectPlebeicCredit
-;;                [T5]DirectPlebeicDebit
+;;                [xxxCAP]DirectBaronicCredit
+;;                [xxxCAP]DirectBaronicDebit
+;;                [xxxCAP]DirectPlebeicCredit
+;;                [xxxCAP]DirectPlebeicDebit
 ;;                ===
-;;                [T6]RawCreditBaronicOuroboros
-;;                [T6]RawCreditBaronicAuryn
-;;                [T6]RawCreditBaronicEliteAuryn
-;;                [T6]RawCreditBaronicVestedOuroboros
-;;                [T6]RawCreditBaronicVestedAuryn
-;;                [T6]RawCreditBaronicVestedEliteAuryn
-;;                [T6]RawCreditBaronicBurnedOuroboros
-;;                [T6]RawCreditBaronicBOVA
-;;                [T6]RawCreditBaronicRecycledAuryn
-;;                [T6]RawCreditBaronicRecycledEliteAuryn
-;;                [T6]RawCreditBaronicVesta
-;;                [T6]RawCreditBaronicSleepingVesta
-;;                [T6]RawCreditBaronicFrozenVesta
-;;                [T6]RawCreditBaronicGold
-;;                [T6]RawCreditBaronicUnity
-;;                [T6]RawCreditBaronicEquity
+;;                [xxxCAP]RawCreditBaronicOuroboros
+;;                [xxxCAP]RawCreditBaronicAuryn
+;;                [xxxCAP]RawCreditBaronicEliteAuryn
+;;                [xxxCAP]RawCreditBaronicVestedOuroboros
+;;                [xxxCAP]RawCreditBaronicVestedAuryn
+;;                [xxxCAP]RawCreditBaronicVestedEliteAuryn
+;;                [xxxCAP]RawCreditBaronicBurnedOuroboros
+;;                [xxxCAP]RawCreditBaronicBOVA
+;;                [xxxCAP]RawCreditBaronicRecycledAuryn
+;;                [xxxCAP]RawCreditBaronicRecycledEliteAuryn
+;;                [xxxCAP]RawCreditBaronicVesta
+;;                [xxxCAP]RawCreditBaronicSleepingVesta
+;;                [xxxCAP]RawCreditBaronicFrozenVesta
+;;                [xxxCAP]RawCreditBaronicGold
+;;                [xxxCAP]RawCreditBaronicUnity
+;;                [xxxCAP]RawCreditBaronicEquity
 ;;                ...
-;;                [T6]RawDebitBaronicOuroboros
-;;                [T6]RawDebitBaronicAuryn
-;;                [T6]RawDebitBaronicEliteAuryn
-;;                [T6]RawDebitBaronicVestedOuroboros
-;;                [T6]RawDebitBaronicVestedAuryn
-;;                [T6]RawDebitBaronicVestedEliteAuryn
-;;                [T6]RawDebitBaronicVesta
-;;                [T6]RawDebitBaronicSleepingVesta
-;;                [T6]RawDebitBaronicGold
-;;                [T6]RawDebitBaronicUnity
+;;                [xxxCAP]RawDebitBaronicOuroboros
+;;                [xxxCAP]RawDebitBaronicAuryn
+;;                [xxxCAP]RawDebitBaronicEliteAuryn
+;;                [xxxCAP]RawDebitBaronicVestedOuroboros
+;;                [xxxCAP]RawDebitBaronicVestedAuryn
+;;                [xxxCAP]RawDebitBaronicVestedEliteAuryn
+;;                [xxxCAP]RawDebitBaronicVesta
+;;                [xxxCAP]RawDebitBaronicSleepingVesta
+;;                [xxxCAP]RawDebitBaronicGold
+;;                [xxxCAP]RawDebitBaronicUnity
 ;;                ...
-;;                [T6]RawCreditPlebeicOuroboros
-;;                [T6]RawCreditPlebeicAuryn
-;;                [T6]RawCreditPlebeicEliteAuryn
-;;                [T6]RawCreditPlebeicVesta
-;;                [T6]RawCreditPlebeicGold
-;;                [T6]RawCreditPlebeicUnity
+;;                [xxxCAP]RawCreditPlebeicOuroboros
+;;                [xxxCAP]RawCreditPlebeicAuryn
+;;                [xxxCAP]RawCreditPlebeicEliteAuryn
+;;                [xxxCAP]RawCreditPlebeicVesta
+;;                [xxxCAP]RawCreditPlebeicGold
+;;                [xxxCAP]RawCreditPlebeicUnity
 ;;                ...
-;;                [T6]RawDebitPlebeicOuroboros
-;;                [T6]RawDebitPlebeicAuryn
-;;                [T6]RawDebitPlebeicEliteAuryn
-;;                [T6]RawDebitPlebeicVesta
-;;                [T6]RawDebitPlebeicGold
-;;                [T6]RawDebitPlebeicUnity
+;;                [xxxCAP]RawDebitPlebeicOuroboros
+;;                [xxxCAP]RawDebitPlebeicAuryn
+;;                [xxxCAP]RawDebitPlebeicEliteAuryn
+;;                [xxxCAP]RawDebitPlebeicVesta
+;;                [xxxCAP]RawDebitPlebeicGold
+;;                [xxxCAP]RawDebitPlebeicUnity
 ;;
 ;;
 ;;      B15     REPL USAGE FUNCTIONS
-;;                DisplayAccountBSL
-;;                DisplayAccountAUL
-;;                DisplayAccountEAUL
-;;                DisplayBL
-;;                DisplaySL
+;;
+;;                [xxREPL]DisplayAccountBSL
+;;                [xxREPL]DisplayAccountAUL
+;;                [xxREPL]DisplayAccountEAUL
+;;                [xxREPL]DisplayBL
+;;                [xxREPL]DisplaySL
 ;;
 ;;==============================================================================
 ;;
@@ -1211,7 +1229,7 @@
     @doc "Initialize the module the first time it is deployed \
     \ Initializes Tables that must have at least one entry \
     \ MASTERMINTER cap is required, which enforces the KEY_MINTER key"
-    (with-capability (MASTERMINTER)
+    (with-capability (ADMIN)
       (SpawnMintingCounter)
       (SpawnBurningCounter)
       (SpawnSupplyCounter)
@@ -1225,7 +1243,7 @@
     \ Each subsequent daily mint grows the values by 1. \
     \ Only MASTERMINTER can call this function. \
     \ It is called at contract initialization."
-    (require-capability (MASTERMINTER))
+    (require-capability (ADMIN))
     (insert SpawnCounterLedger SPAWN_COUNT {"spawncounter": -1, "spawnepoch": -1})
   )
   ;;
@@ -1236,7 +1254,7 @@
     \ Ouroboros is burned, effectively reducing supply \
     \ Auryn and Elite-Auryn is recycled on burn events \
     \ Crediting them to different target destinations."
-    (require-capability (MASTERMINTER))
+    (require-capability (ADMIN))
     (insert BurningLedger BURN_COUNT
       {"BurnedSnake": 0.0
       ,"RecycledAuryn": 0.0
@@ -1246,7 +1264,7 @@
     @doc "Initializes the SupplyLedger which saves Supply Amount Data \
     \ Starting with zero accross the line \
     \ Its stored values grow as Tokens are minted or burned"
-    (require-capability (MASTERMINTER))
+    (require-capability (ADMIN))
     (insert SupplyLedger SUPPLY_COUNT
       {"Ouroboros": 0.0
       ,"Auryn": 0.0
@@ -2926,6 +2944,16 @@
     ;;(diff-time (time FUTURETIME) (time GENESISTIME))
   )
   ;;----------------------------------------------------------------------------
+  (defun VestDemiourgosToken (type:integer amount:decimal vesting:integer)
+    true
+  )
+  (defun UnvestDemiourgosToken (type:integer)
+    true
+  )
+  (defun MergeVestedDemiourgosToken (type:integer)
+    true
+  )
+  ;;----------------------------------------------------------------------------
   (defun VestOuroboros (amount:decimal vesting:integer)
     @doc "Vests an Ouroboros amount with <vesting> nr. of days"
     true
@@ -2972,6 +3000,23 @@
   )
   (defun MergeVestedEliteAuryn  (amount:decimal)
     @doc "Merge 2 or more batches of Vested Elite Auryn  \
+    \ The amount is added, and the vesting time \
+    \ is is computed usng weigthed arithmetic mean. "
+    true
+  )
+  ;;
+  (defun SleepVesta  (amount:decimal vesting:integer)
+    @doc "Vests a Vesta  amount with <vesting> nr. of days"
+    true
+  )
+  (defun UnvestSleepingVesta  (amount:decimal)
+    @doc "Unvests a batch of Sleeping Vesta , converting it back \
+    \ to free liquid Vesta  \
+    \ Only possible if vesting has expired."
+    true
+  )
+  (defun MergeSleepingVesta  (amount:decimal)
+    @doc "Merge 2 or more batches of Sleeping Vesta  \
     \ The amount is added, and the vesting time \
     \ is is computed usng weigthed arithmetic mean. "
     true
