@@ -1,0 +1,634 @@
+
+;;MODULE LOADINGS
+;;==============================================================================
+;; PART 01 - Load all Mockup Enviroment Modules
+(load "../pact-repl-utils/init.repl")
+(print "LOADED ALL ENV MODULES")
+;;==============================================================================
+;;
+;;
+;;
+;;
+;;
+;;==============================================================================
+;; PART 02 - Define "free.DH-Master-Keyset"
+(print "==========================TX01=========================================")
+(print "==========================Define==================free.DH-Master-Keyset")
+(begin-tx)
+  (module demi-key1 GOVERNANCE
+    (defcap GOVERNANCE () true)
+    (defconst DHADMIN "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6")
+  )
+(env-data { "AncientHodlerPrivateTestKey": { "keys": [ demi-key1.DHADMIN  ], "pred": "keys-all" } })
+(namespace "free")
+(define-keyset "free.DH-Master-Keyset" (read-keyset "AncientHodlerPrivateTestKey"))
+(print "Defined the free.DH-Master-Keyset")
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;
+;;
+;;
+;;==============================================================================
+(print "==========================TX02=========================================")
+(print "==========================Define===========free.DH-Master-Minter-Keyset")
+(begin-tx)
+  (module demi-key2 GOVERNANCE
+    (defcap GOVERNANCE () true)
+    (defconst DHMM "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a7")
+  )
+(env-data { "AncientHodlerPrivateMinterTestKey": { "keys": [ demi-key2.DHMM  ], "pred": "keys-all" } })
+(namespace "free")
+(define-keyset "free.DH-Master-Minter-Keyset" (read-keyset "AncientHodlerPrivateMinterTestKey"))
+(print "Defined the free.DH-Master-Minter-Keyset")
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;
+;;
+;;
+;;==============================================================================
+;; PART 03 - Load pact smart contract
+(print "==========================TX03=========================================")
+(print "==========================Load-Snake-files=============================")
+(begin-tx "LOOOOOOOOOOOOOOOOOA PACT")
+;(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] } ])
+;(env-data { "init": true })
+;(env-data { "AncientHodlerPrivateTestKey": { "keys": [ test-demiourgos-keys.DHADMIN  ], "pred": "keys-all" } })
+(env-gasmodel "table")(env-gaslimit 10000000)(env-gas 0)
+(namespace "free")
+;(describe-keyset "free.DH-VEGLD-Staking-Keyset")
+;(define-keyset "free.DH-Master-Keyset" (read-keyset "AncientHodlerPrivateTestKey"))
+;(env-sigs [ { "key": "free.DH-Master-Keyset", "caps": [] } ])
+(load "/home/bytales/PactLanguage/SnakeToken/SnakeContracts/DHOuroboros_new.pact")
+(env-gas)
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;
+;;
+;;
+;;==============================================================================
+;; PART 04 - Use loaded modules
+(print "==========================TX04=========================================")
+(print "==========================Use-Main-Module-tx===========================")
+(begin-tx)
+(use free.DHOuroboros)
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;
+;;
+;;
+;;==============================================================================
+(begin-tx)
+(print "==========================TX05=========================================")
+(print "==========================Initialize-Snake-Toke-SC-1st-init============")
+(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a7", "caps": [] } ]) ;; free.DH-Master-Minter-Keyset
+;(test-capability (free.DHOuroboros.MASTERMINTER))
+(free.DHOuroboros.BirthSnakes)
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;
+;;
+;;
+;;==============================================================================
+(begin-tx)
+(print "==========================TX06=========================================")
+(print "==========================Initialize-Snake-Accoounts===================")
+(module snake-accounts GOVERNANCE
+  (defcap GOVERNANCE () true)
+  (defconst SENDER05 "b0e44b014ec1db09e1471c9d2d1b1f63a4ed54f9036b6051fd3e21d69b9e2a46")
+  (defconst SENDER06 "92fc59f7c3d4df56d7b4e7f6f3443a543a99c0d0fdd0d77dca2fa97bc3cbde51")
+  (defconst SENDER07 "71e1f75ce5123b81d6cead7fc2078a89b9ce2d10d9e1e2fd7d06274e38a5c21c")
+  (defconst SENDER08 "d80289ebbfce5ad3f01965d1550512c1f2d0e41a72428c753e140238db399d4a")
+  (defconst SENDER09 "37f1d72942e54e08c9a5c687d35f0d3d72c32c3e3fcf135ac101cc0fe126a432")
+  (defconst SENDER10 "e1c764390b7dbbf0a459604947a1ff1de8c87594bc97e7d6a9d465a47e1bcdf3")
+  (defconst SENDER11 "4d81c699b9ab01b79d84ed057a9471f7fc52fb9be431080fbdc1c526857b6018")
+  (defconst SENDER12 "c4c40e8753f62d8e81198c1e8e4f36a1f0ee0c86d68004c16552602a62d2e193")
+  (defconst SENDER13 "7f9d3f5a22b89d0bc4e62a404998764cfaac52f09eb2bc9a92d0dc3f3766d6a0")
+  (defconst SENDER14 "a34384e8e99dd5fbce51a244209b535b5e56fe70fc4d01cc90b7788358c54f4d")
+  (defconst SENDER15 "628b9e89a9540fb49de978d88912fc4ce35ed8e8925b407f725a90b3e2f4c79f")
+  (defconst SENDER16 "993844b38897e9ac2cbaf78e4b1cc6e0a95f8ad2e8a93b7a7b623e96a156de5a")
+  (defconst SENDER17 "d65d9e35d548eb287b72dd51a8e3d8d1443e9a9f4c6f9b3c8c52716e4b8e4a37")
+  (defconst SENDER18 "18535b8a17a6db6c23a377953b8ad5a6161611177f5b84ae80b09ff7f07a6014")
+  (defconst SENDER19 "b62e7814f93e2d0a7e0a3e525ce0a8be4b478deca747a8deed8e5a08dd3e191a")
+  (defconst SENDER20 "48f3d8a642e92b0cd2382179c5e2d88d2964d9d162d8c4f8775f7a91e4220db1")
+  (defconst SENDER21 "1adfc938b4e2576d0e4fbc32a8d9e60c536fa82be9b7c403d4a35c5be4da5a62")
+  (defconst SENDER22 "879e6b0cfd2341ea5c4b8d926a70f3e1b5a2c9d8e7f6a14d0e3527bc493fadbd")
+  (defconst SENDER23 "6905a84d2e7bc3d149fb2e6318d0fa574b6e9732af1c8cdab503d2fc4e1e6b8f")
+  (defconst SENDER24 "e6cd1fb24a3958ed0a8fc7b6d2e90f1a5674dc9b2a3f8e1bc3d0e92549fa6b7c")
+  (defconst SENDER25 "5c38af94be07d6e9237d49c2a5b160d4f8e1ca42b93f7d2ed0f3a4b65e9dc1b2")
+  (defconst SENDER26 "db34a5c8e17f6b0d9a5c81f237ed40bf6a29d3c7e8b4f1a0d52c9fa7be63d81a")
+  (defconst SENDER27 "f62aebc0d4e5193b5c8f1a7d36e04bd8a2379f4c1d2e5b7e0c93adfb42c1f7e3")
+  (defconst SENDER28 "8b4e2a36c7d1e9f5a3b049d8c2f7e40d19a57fc8e6d0b3a6f51c72d9e84f3a02")
+  (defconst SENDER29 "309e2cd1f6a8b7c5e4d9af40b8c73e526d1f4a07bc5e92a43f816b2d9e0a7f3")
+  (defconst SENDER30 "1b9f7e4d2c3aebf80a6d9c5f6e24a3bd7f5a81c0e346d9b23e90c7f8a5d1e22")
+)
+
+(env-data { "key01": { "keys": [ snake-accounts.SENDER05  ], "pred": "keys-all" },
+            "key02": { "keys": [ snake-accounts.SENDER06  ], "pred": "keys-all" },
+            "key03": { "keys": [ snake-accounts.SENDER07  ], "pred": "keys-all" },
+            "key04": { "keys": [ snake-accounts.SENDER08  ], "pred": "keys-all" },
+            "key05": { "keys": [ snake-accounts.SENDER09  ], "pred": "keys-all" },
+            "key06": { "keys": [ snake-accounts.SENDER10  ], "pred": "keys-all" },
+            "key07": { "keys": [ snake-accounts.SENDER11  ], "pred": "keys-all" },
+            "key08": { "keys": [ snake-accounts.SENDER12  ], "pred": "keys-all" },
+            "key09": { "keys": [ snake-accounts.SENDER13  ], "pred": "keys-all" },
+            "key10": { "keys": [ snake-accounts.SENDER14  ], "pred": "keys-all" },
+            "key11": { "keys": [ snake-accounts.SENDER15  ], "pred": "keys-all" },
+            "key12": { "keys": [ snake-accounts.SENDER16  ], "pred": "keys-all" },
+            "key13": { "keys": [ snake-accounts.SENDER17  ], "pred": "keys-all" },
+            "key14": { "keys": [ snake-accounts.SENDER18  ], "pred": "keys-all" },
+            "key15": { "keys": [ snake-accounts.SENDER19  ], "pred": "keys-all" },
+            "key16": { "keys": [ snake-accounts.SENDER20  ], "pred": "keys-all" },
+            "key17": { "keys": [ snake-accounts.SENDER21  ], "pred": "keys-all" },
+            "key18": { "keys": [ snake-accounts.SENDER22  ], "pred": "keys-all" }})
+
+;;Entering Namespace and Defining Keys
+(namespace "free")
+;;T1
+(define-keyset free.DHOuroboros.KEY_GENESIS_MINTER (read-keyset "key01"))
+(define-keyset free.DHOuroboros.KEY_DAILY_MINTER (read-keyset "key02"))
+(define-keyset free.DHOuroboros.KEY_TOKEN_SALE (read-keyset "key03"))
+;;T2
+(define-keyset free.DHOuroboros.KEY_AUTO_STAKING (read-keyset "key04"))
+(define-keyset free.DHOuroboros.KEY_ELITE_HOLD (read-keyset "key05"))
+(define-keyset free.DHOuroboros.KEY_UNCOIL_HOLD (read-keyset "key06"))
+(define-keyset free.DHOuroboros.KEY_VESTING_HOLD (read-keyset "key07"))
+;;T3
+(define-keyset free.DHOuroboros.KEY_BONDS (read-keyset "key08"))
+(define-keyset free.DHOuroboros.KEY_TREASURY (read-keyset "key09"))
+(define-keyset free.DHOuroboros.KEY_DEVELOPERS (read-keyset "key10"))
+(define-keyset free.DHOuroboros.KEY_RAFFLES (read-keyset "key11"))
+;;T4
+(define-keyset free.DHOuroboros.KEY_SHAREHOLDERS (read-keyset "key12"))
+(define-keyset free.DHOuroboros.KEY_LIQUIDITY_FARMING (read-keyset "key13"))
+(define-keyset free.DHOuroboros.KEY_SNAKE_STAKING (read-keyset "key14"))
+(define-keyset free.DHOuroboros.KEY_SUBSIDIARY_STAKING (read-keyset "key15"))
+(define-keyset free.DHOuroboros.KEY_VEGLD_STAKING (read-keyset "key16"))
+
+(define-keyset free.DHOuroboros.KEY_DAO_SNAKE (read-keyset "key17"))
+(define-keyset free.DHOuroboros.KEY_DAO_CODINGDIVISION (read-keyset "key18"))
+;;Spawn Snake Accounts
+
+;;Tier 1 accounts
+(free.DHOuroboros.SpawnSnakeAccount free.DHOuroboros.GENESIS_MINTER (describe-keyset free.DHOuroboros.KEY_GENESIS_MINTER) free.DHOuroboros.HT_GENESIS_MINTER)
+(free.DHOuroboros.SpawnSnakeAccount free.DHOuroboros.DAILY_MINTER (describe-keyset free.DHOuroboros.KEY_DAILY_MINTER) free.DHOuroboros.HT_DAILY_MINTER)
+(free.DHOuroboros.SpawnSnakeAccount free.DHOuroboros.TOKEN_SALE (describe-keyset free.DHOuroboros.KEY_TOKEN_SALE) free.DHOuroboros.HT_TOKEN_SALE)
+
+;;Tier 2 Accounts
+(free.DHOuroboros.SpawnSnakeAccount free.DHOuroboros.AUTO_STAKING (describe-keyset free.DHOuroboros.KEY_AUTO_STAKING) free.DHOuroboros.HT_AUTO_STAKING)
+(free.DHOuroboros.SpawnSnakeAccount free.DHOuroboros.ELITE_HOLD (describe-keyset free.DHOuroboros.KEY_ELITE_HOLD) free.DHOuroboros.HT_ELITE_HOLD)
+(free.DHOuroboros.SpawnSnakeAccount free.DHOuroboros.UNCOIL_HOLD (describe-keyset free.DHOuroboros.KEY_UNCOIL_HOLD) free.DHOuroboros.HT_UNCOIL_HOLD)
+(free.DHOuroboros.SpawnSnakeAccount free.DHOuroboros.VESTING_HOLD (describe-keyset free.DHOuroboros.KEY_VESTING_HOLD) free.DHOuroboros.HT_VESTING_HOLD)
+
+;;Tier 3 accounts
+(free.DHOuroboros.SpawnSnakeAccount free.DHOuroboros.BONDS (describe-keyset free.DHOuroboros.KEY_BONDS) free.DHOuroboros.HT_BONDS)
+(free.DHOuroboros.SpawnSnakeAccount free.DHOuroboros.TREASURY (describe-keyset free.DHOuroboros.KEY_TREASURY) free.DHOuroboros.HT_TREASURY)
+(free.DHOuroboros.SpawnSnakeAccount free.DHOuroboros.DEVELOPERS (describe-keyset free.DHOuroboros.KEY_DEVELOPERS) free.DHOuroboros.HT_DEVELOPERS)
+(free.DHOuroboros.SpawnSnakeAccount free.DHOuroboros.RAFFLES (describe-keyset free.DHOuroboros.KEY_RAFFLES) free.DHOuroboros.HT_RAFFLES)
+
+;;Tier 4 Accounts
+(free.DHOuroboros.SpawnSnakeAccount free.DHOuroboros.SHAREHOLDERS (describe-keyset free.DHOuroboros.KEY_SHAREHOLDERS) free.DHOuroboros.HT_SHAREHOLDERS)
+(free.DHOuroboros.SpawnSnakeAccount free.DHOuroboros.LIQUIDITY_FARMING (describe-keyset free.DHOuroboros.KEY_LIQUIDITY_FARMING) free.DHOuroboros.HT_LIQUIDITY_FARMING)
+(free.DHOuroboros.SpawnSnakeAccount free.DHOuroboros.SNAKE_STAKING (describe-keyset free.DHOuroboros.KEY_SNAKE_STAKING) free.DHOuroboros.HT_SNAKE_STAKING)
+(free.DHOuroboros.SpawnSnakeAccount free.DHOuroboros.SUBSIDIARY_STAKING (describe-keyset free.DHOuroboros.KEY_SUBSIDIARY_STAKING) free.DHOuroboros.HT_SUBSIDIARY_STAKING)
+(free.DHOuroboros.SpawnSnakeAccount free.DHOuroboros.VEGLD_STAKING (describe-keyset free.DHOuroboros.KEY_VEGLD_STAKING) free.DHOuroboros.HT_VEGLD_STAKING)
+
+(free.DHOuroboros.SpawnSnakeAccount free.DHOuroboros.DAO_SNAKE (describe-keyset free.DHOuroboros.KEY_DAO_SNAKE) free.DHOuroboros.HT_DAO_SNAKE)
+(free.DHOuroboros.SpawnSnakeAccount free.DHOuroboros.DAO_CODINGDIVISION (describe-keyset free.DHOuroboros.KEY_DAO_CODINGDIVISION) free.DHOuroboros.HT_DAO_CODINGDIVISION)
+
+
+;;Creating Testing Accounts
+(free.DHOuroboros.SpawnSnakeAccount "sender01" (describe-keyset "free.sender01-keyset") "@Bossu")
+(free.DHOuroboros.SpawnSnakeAccount "sender03" (describe-keyset "free.sender03-keyset") "@Byta")
+(free.DHOuroboros.SpawnSnakeAccount "sender04" (describe-keyset "free.sender04-keyset") "@Emma")
+
+(print "PULAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+;(validate-principal "k:a0142b53f4fcd2019111a317569f88742279cccad3cc814ca5a73c7aa59a4e2d" (describe-keyset "free.sender05-keyset"))
+(validate-principal (keyset-ref-guard "free.sender03-keyset") "sender03")
+(validate-principal (describe-keyset "free.sender03-keyset") "sender03")
+(typeof (describe-keyset "free.sender03-keyset"))
+(typeof (keyset-ref-guard "free.sender03-keyset"))
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;
+;;
+;;
+;;==============================================================================
+;; PART 05 - Create Genesis Minter
+(begin-tx)
+(print "==========================TX07=========================================")
+(print "==========================MINTGENESIS==================================")
+(namespace "free")
+;;Requires "free.DH-Master-Keyset" and "free.DH-Master-Minter-Keyset" to create the daily mint
+;(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a7", "caps": [] },
+;            { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] }])
+(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a7", "caps": [] },   ;;free.DH-Master-Minter-Keyset
+            ;{ "key": "48f3d8a642e92b0cd2382179c5e2d88d2964d9d162d8c4f8775f7a91e4220db1", "caps": [] },
+            { "key": "b0e44b014ec1db09e1471c9d2d1b1f63a4ed54f9036b6051fd3e21d69b9e2a46", "caps": [] }])  ;;Number 05 Keyset "free.DHOuroboros.KEY_GENESIS_MINTER"
+
+;(print "==========================GUARD======================")
+;(at "Guard" (read free.DHOuroboros.PlebeicSnakeLedger "sender05"))
+;(at "Guard" (read free.DHOuroboros.PlebeicSnakeLedger "sender06"))
+
+;(print "==========================GUARD2======================")
+;(describe-keyset "free.DH-Genesis-Minter-Keyset")
+;describe-keyset free.DHOuroboros.KEY_GENESIS_MINTER)
+;(describe-keyset "free.DH-Daily-Minter-Keyset")
+
+;;Add Capabilities To Mint Genesis Amount
+;(test-capability (free.DHOuroboros.GENESIS_SPAWN_V2 free.DHOuroboros.GENESIS_MINTER))
+;;Spawn Primordial Snakes and deliver them to their destinations.
+(print "==========================MINTGENESISV2-TESTSUPPLY==================================")
+(free.DHOuroboros.GetSupply "Ouroboros")
+(free.DHOuroboros.SpawnPrimordialSnakes free.DHOuroboros.GENESIS_MINTER)
+;(expect "sender20 has 490.000 Ouroboros" 490000.0 (free.DHOuroboros.OuroborosBalance "sender20"))
+(free.DHOuroboros.GetSpawnCounter)
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;
+;;
+;;
+;;==============================================================================
+(begin-tx "Credit Byta TX")
+(print "==========================TX08=========================================")
+(print "==========================Credit-Byta-Account==========================")
+(namespace "free")
+(env-gasmodel "table")(env-gaslimit 10000000)(env-gas 0)
+(env-sigs [ { "key": "b0e44b014ec1db09e1471c9d2d1b1f63a4ed54f9036b6051fd3e21d69b9e2a46", "caps": [] } ]) ;; Number 05 Keyset - Genesis Minter
+;;Transfer Snake Token to a mockup account
+;(test-capability (free.DHOuroboros.DEBIT free.DHOuroboros.GENESIS_MINTER))
+;(test-capability (free.DHOuroboros.CREDIT "sender03"))
+
+(print "Valoarea Sender05 inainte")
+(at 5 (free.DHOuroboros.GetAllBaronicBalances free.DHOuroboros.GENESIS_MINTER))
+;(free.DHOuroboros.TransferOuroboros free.DHOuroboros.GENESIS_MINTER "sender03" 60000.0)
+;(free.DHOuroboros.TransferOuroboros free.DHOuroboros.GENESIS_MINTER "sender03" 60000.0)
+(free.DHOuroboros.AbsoluteTransfer free.DHOuroboros.GENESIS_MINTER "sender03" 60000.0 1)
+(print "Valoarea Sender 05 dupa")
+(at 5 (free.DHOuroboros.GetAllBaronicBalances free.DHOuroboros.GENESIS_MINTER))
+(print "Valoarea Sender 03 dupa")
+(at 5 (free.DHOuroboros.GetAllBaronicBalances "sender03"))
+(env-gas)
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;
+;;
+;;
+;;==============================================================================
+(begin-tx "Byta-Coils-Ouroboros")
+(print "==========================TX09=========================================")
+(print "==========================Byta-Coils-Ouroboros=========================")
+(namespace "free")
+(env-gasmodel "table")(env-gaslimit 10000000)(env-gas 0)
+(env-sigs [ { "key": "6b9847af4a7bea9d38af8702d1597e35c86e08b4c04ce924b9d8b55a2f5f21b1", "caps": [] } ]) ;; Number 03 Keyset
+;Transfer Snake Token to a mockup account
+;(test-capability (free.DHOuroboros.DEBIT "sender03"))
+;(test-capability (free.DHOuroboros.CREDIT "sender03"))
+;(test-capability (free.DHOuroboros.CREDIT free.DHOuroboros.AUTO_STAKING))
+;(test-capability (free.DHOuroboros.COILOUROBOROS "sender03" 25000.0))
+
+(print "Coiling 5000 Ouroboros from sender 03")
+(free.DHOuroboros.CoilOuroboros "sender03" 55000.0)
+(env-gas)
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;
+;;
+;;
+;;==============================================================================
+;; PART 06 - Mint Daily Supply
+(begin-tx)
+(print "==========================TX10=========================================")
+(print "==========================Spawning-Daily-Mint==========================")
+(namespace "free")
+;(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] },   ;;"free.DH-Master-Keyset"
+;            { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a7", "caps": [] }])  ;;free.DH-Master-Minter-Keyset
+
+;(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a7", "caps": [] },   ;;free.DH-Master-Minter-Keyset
+;            { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] }])  ;;"free.DH-Master-Keyset"
+
+;(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a7", "caps": [] } ]) ;; free.DH-Master-Minter-Keyset
+;(env-sigs [ { "key": "71e1f75ce5123b81d6cead7fc2078a89b9ce2d10d9e1e2fd7d06274e38a5c21c", "caps": [] } ]) ;; Number 7 Keyset
+
+(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a7", "caps": [] },   ;;free.DH-Master-Minter-Keyset
+            ;{ "key": "92fc59f7c3d4df56d7b4e7f6f3443a543a99c0d0fdd0d77dca2fa97bc3cbde51", "caps": [] },    ;;Number 6 Daily Minter
+            { "key": "d65d9e35d548eb287b72dd51a8e3d8d1443e9a9f4c6f9b3c8c52716e4b8e4a37", "caps": [] },    ;;Sender 17 Liq Farming
+            { "key": "18535b8a17a6db6c23a377953b8ad5a6161611177f5b84ae80b09ff7f07a6014", "caps": [] },    ;;Sender 18 Snake staking
+            { "key": "b62e7814f93e2d0a7e0a3e525ce0a8be4b478deca747a8deed8e5a08dd3e191a", "caps": [] },    ;;Sender 19 Sub staking
+            { "key": "48f3d8a642e92b0cd2382179c5e2d88d2964d9d162d8c4f8775f7a91e4220db1", "caps": [] }])   ;;Sender 20 vEGLD staking
+
+;(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] } ]) ;;"free.DH-Master-Keyset"
+
+;;Add Capabilities To Mint Daily Amnount
+;(test-capability (free.DHOuroboros.DAILY_SPAWN free.DHOuroboros.DAILY_MINTER))
+(free.DHOuroboros.SpawnDailySnakes free.DHOuroboros.DAILY_MINTER free.DHOuroboros.TIME1)
+;(free.DHOuroboros.SpawnDailySnakes "sender07" (describe-keyset "free.sender07-keyset") free.DHOuroboros.TIME3)
+;(expect "sender03 has 950 Ouroboros" 951.0 (free.DHOuroboros.OuroborosBalance "sender03"))
+(print "GETTTTTTTEN OUROBOROS SUPPLY")
+(free.DHOuroboros.GetSupply "Ouroboros")
+(print "GETTTTTTTEN Auryndex after one daily mint")
+(free.DHOuroboros.GetAuryndex)
+(free.DHOuroboros.SpawnDailySnakes free.DHOuroboros.DAILY_MINTER free.DHOuroboros.TIME3)
+(print "GETTTTTTTEN Auryndex after two daily mint")
+;(free.DHOuroboros.GetAuryndex)
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;
+;;
+;;
+;;==============================================================================
+(begin-tx)
+(print "==========================TX11=========================================")
+(print "==========================Coil-Ouroboros--Uncoil-Auryn-Test============")
+(namespace "free")
+(env-gasmodel "table")(env-gaslimit 10000000)(env-gas 0)
+(env-sigs [ { "key": "6b9847af4a7bea9d38af8702d1597e35c86e08b4c04ce924b9d8b55a2f5f21b1", "caps": [] } ]) ;; Number 03 Keyset
+;Transfer Snake Token to a mockup account
+;(test-capability (free.DHOuroboros.DEBIT "sender03"))
+;(test-capability (free.DHOuroboros.CREDIT "sender03"))
+;(test-capability (free.DHOuroboros.DEBIT free.DHOuroboros.AUTO_STAKING))
+(test-capability (free.DHOuroboros.UNCOIL_AURYN "sender03"))
+;(test-capability (free.DHOuroboros.UNCOILAURYN "sender03" 60.0))
+(test-capability (free.DHOuroboros.COIL_AURYN "sender03"))
+
+(print "Getting best auryn uncoil position for sender03")
+(free.DHOuroboros.GetBestAurynUncoilPosition "sender03")
+
+
+;(print "Coiling 1750 Ouroboros from sender 03")
+;(free.DHOuroboros.BestUncoilAuryn "sender03" 2000.0 free.DHOuroboros.TIME1)
+;(print "Bytales coils 21000 Auryn")
+;(free.DHOuroboros.CoilAuryn "sender03" 21000.0)
+;(print "Getten elite account tier after coiling Auryn")
+;(free.DHOuroboros.GetEliteAccountTier "sender03")
+(free.DHOuroboros.GetAurynUncoilTime "sender03")
+;(print "Coiling 250 Ouroboros from sender 03")
+;(print "Uncoil Auryn on all positions")
+(free.DHOuroboros.BestUncoilAuryn "sender03" 390.0 free.DHOuroboros.TIME3)
+(free.DHOuroboros.BestUncoilAuryn "sender03" 70.0 free.DHOuroboros.TIME3)
+(free.DHOuroboros.BestUncoilAuryn "sender03" 240.0 free.DHOuroboros.TIME3)
+(free.DHOuroboros.BestUncoilAuryn "sender03" 270.0 free.DHOuroboros.TIME3)
+(free.DHOuroboros.BestUncoilAuryn "sender03" 340.0 free.DHOuroboros.TIME3)
+;(free.DHOuroboros.BestUncoilAuryn "sender03" 770.0 free.DHOuroboros.TIME3)
+;(free.DHOuroboros.BestUncoilAuryn "sender03" 20.0 free.DHOuroboros.TIME3)
+;(free.DHOuroboros.BestUncoilAuryn "sender03" 60.0 free.DHOuroboros.TIME3)
+
+(print "Finalizing Auryn Uncoil")
+;(free.DHOuroboros.FinalizeUncoilAuryn "sender03" free.DHOuroboros.TIME4)
+;(free.DHOuroboros.FinalizeUncoilAuryn "sender03" free.DHOuroboros.TIME4)
+;(free.DHOuroboros.FinalizeUncoilAuryn "sender03" free.DHOuroboros.TIME4)
+;(free.DHOuroboros.FinalizeUncoilAuryn "sender03" free.DHOuroboros.TIME4)
+;(free.DHOuroboros.FinalizeUncoilAuryn "sender03" free.DHOuroboros.TIME4)
+;(free.DHOuroboros.FinalizeUncoilAuryn "sender03" free.DHOuroboros.TIME4)
+;(free.DHOuroboros.FinalizeUncoilAuryn "sender03" free.DHOuroboros.TIME4)
+;(free.DHOuroboros.FinalizeUncoilAuryn "sender03" free.DHOuroboros.TIME4)
+(print "GEEEEEEEEEEEEEEEEEET POSITION DATA")
+;(free.DHOuroboros.GetRipeAurynUncoilPosition "sender03" free.DHOuroboros.TIME4)
+;(free.DHOuroboros.GetAurynUncoilLedgerPositionData "sender03" 2.0)
+;(free.DHOuroboros.FinalizeUncoilAuryn "sender03" free.DHOuroboros.TIME4)
+(env-gas)
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;
+;;
+;;
+;;==============================================================================
+(begin-tx)
+(print "==========================TX12=========================================")
+(print "=========================Testing-Raw-Creditation=======================")
+(namespace "free")
+(print "Attempting to credit Emma Ouroboros without capability - pause")
+;(test-capability (free.DHOuroboros.CREDIT "sender04"))
+;(free.DHOuroboros.CreditOuroboros "sender04" (describe-keyset "free.sender04-keyset") 10000.0)
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;
+;;
+;;
+;;==============================================================================
+;; PART 06 - Get Supply
+(begin-tx)
+(print "==========================TX13=========================================")
+(print "==========================Getten-Ouroboros-Supply======================")
+(namespace "free")
+;(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] } ])
+(print "GETTTTTTTEN OUROBOROS SUPPLY")
+(free.DHOuroboros.GetSupply "Ouroboros")
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;
+;;
+;;
+;;==============================================================================
+(begin-tx)
+(print "==========================TX14=========================================")
+(print "==========================Printing-results=============================")
+(namespace "free")
+(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] } ])    ;;"free.DH-Master-Keyset"
+(print "Printing All Accounts")
+;(select free.DHOuroboros.BaronicSnakeLedger (where "Ouroboros" (<= 0.0)))
+(print "Printing All Uncoil Auryn Accounts")
+;(select free.DHOuroboros.AurynUncoilLedger (where "P1A" (<= 0.0)))
+(print "Printing BurningTable")
+;(select free.DHOuroboros.BurningLedger (where "BurnedSnake" (<= 0.0)))
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;
+;;
+;;
+;;==============================================================================
+(begin-tx)
+(print "==========================TX15=========================================")
+(print "==========================TESTING HEROTAGS=============================")
+(namespace "free")
+;(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] },   ;;free.DH-Master-Keyset
+;            { "key": "6b9847af4a7bea9d38af8702d1597e35c86e08b4c04ce924b9d8b55a2f5f21b1", "caps": [] }])  ;;Number 03 Keyset
+
+(env-sigs [ { "key": "6b9847af4a7bea9d38af8702d1597e35c86e08b4c04ce924b9d8b55a2f5f21b1", "caps": [] } ] ) ;;Sender03 keyset Bytales
+
+(free.DHOuroboros.ValidateHerotag "@Bytales" "sender03")
+;(free.DHOuroboros.ListBaronicColumn "ATHT")
+;(test-capability (free.DHOuroboros.NEWHEROTAG))
+;(free.DHOuroboros.UpdateSnakeAccountHeroTag "sender03" (describe-keyset "free.sender03-keyset") "@Bytales")
+;(free.DHOuroboros.ListBaronicColumn "ATHT")
+;(free.DHOuroboros.UpdateSnakeAccountHeroTag "sender03" (describe-keyset "free.sender03-keyset") "@BytalesByta")
+(free.DHOuroboros.ListBaronicColumn "ATHT")
+;(free.DHOuroboros.UpdateSnakeAccountHeroTag "k:a0142b53f4fcd2019111a317569f88742279cccad3cc814ca5a73c7aa59a4e2d" (describe-keyset "free.sender05-keyset") "@Kadena.io")
+(print "========================CHECK-Enforce-Reservd")
+(print "==========================Creating-Allready-Existing-Account===========")
+;(free.DHOuroboros.SpawnSnakeAccount "sender03" (describe-keyset "free.sender03-keyset") "@Byta")
+(free.DHOuroboros.CoilAuryn "sender03" 5025.0)
+;(free.DHOuroboros.AbsoluteTransferAnew "sender03" "sender02" (describe-keyset "free.sender02-keyset") "@Coco" 1756.0 3)
+;(free.DHOuroboros.AbsoluteTransfer "sender03" "sender02" 2000.0 3)
+;(free.DHOuroboros.enforce-reserved "k:a0142b53f4fcd2019111a317569f88742279cccad3cc814ca5a73c7aa59a4e2d" (describe-keyset "free.sender05-keyset"))
+;(free.DHOuroboros.enforce-reserved "sender03" (describe-keyset "free.sender03-keyset"))
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;
+;;
+;;
+;;==============================================================================
+;;==============================================================================
+(begin-tx)
+(print "==========================TX17=========================================")
+(print "==========================UnCoil-Elite-Auryn-Test======================")
+(namespace "free")
+
+(env-sigs [ { "key": "6b9847af4a7bea9d38af8702d1597e35c86e08b4c04ce924b9d8b55a2f5f21b1", "caps": [] },
+            { "key": "3a9dd532d73dace195dbb64d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] }])
+
+(print "Bytales coils his test Auryn")
+(free.DHOuroboros.CoilAuryn "sender03" 5025.0)
+;(free.DHOuroboros.CoilAuryn "sender03" 6400.0)
+;(free.DHOuroboros.GetBestEliteAurynUncoilPosition "sender03" 1700.0)
+(free.DHOuroboros.BestUncoilEliteAuryn "sender03" 26.0 free.DHOuroboros.TIME3)
+;(free.DHOuroboros.BestUncoilEliteAuryn "sender03" 26.0 free.DHOuroboros.TIME3)
+;(free.DHOuroboros.BestUncoilEliteAuryn "sender03" 27.0 free.DHOuroboros.TIME3)
+;(free.DHOuroboros.BestUncoilEliteAuryn "sender03" 28.0 free.DHOuroboros.TIME3)
+;(free.DHOuroboros.BestUncoilEliteAuryn "sender03" 29.0 free.DHOuroboros.TIME3)
+;(free.DHOuroboros.BestUncoilEliteAuryn "sender03" 30.0 free.DHOuroboros.TIME3)
+;(free.DHOuroboros.BestUncoilEliteAuryn "sender03" 31.0 free.DHOuroboros.TIME3)
+;(free.DHOuroboros.CoilOuroboros "sender03" 1200.0)
+;(free.DHOuroboros.CoilAuryn "sender03" 899.0)
+;(free.DHOuroboros.BestUncoilEliteAuryn "sender03" 400.0 free.DHOuroboros.TIME3)
+(print "==========================RIPE-TEST======================")
+(free.DHOuroboros.GetRipeEliteAurynUncoilPosition "sender03" free.DHOuroboros.TIME4)
+(free.DHOuroboros.CoilAuryn "sender03" 5025.0)
+(free.DHOuroboros.BestUncoilEliteAuryn "sender03" 23.0 free.DHOuroboros.TIME3)
+(print "==========================TRANSFER-AURYNS=====================")
+;(free.DHOuroboros.AbsoluteTransfer "sender03" "sender02" 8000.0 3)
+;(free.DHOuroboros.AbsoluteTransfer "sender03" "sender02" 2500.0 2)
+;(free.DHOuroboros.BestUncoilEliteAuryn "sender02" 4500.0 free.DHOuroboros.TIME3)
+
+;(free.DHOuroboros.BestUncoilEliteAuryn "sender03" 8000.0 free.DHOuroboros.TIME3)
+;(free.DHOuroboros.FinalizeUncoilEliteAuryn "sender03" free.DHOuroboros.TIME4)
+;(free.DHOuroboros.FinalizeUncoilEliteAuryn "sender03" free.DHOuroboros.TIME4)
+
+;(free.DHOuroboros.BestUncoilEliteAuryn "sender03" 900.0 free.DHOuroboros.TIME3)
+;(free.DHOuroboros.BestUncoilEliteAuryn "sender03" 500.0 free.DHOuroboros.TIME3)
+;(free.DHOuroboros.BestUncoilEliteAuryn "sender03" 200.0 free.DHOuroboros.TIME3)
+(commit-tx)
+
+
+(begin-tx)
+(print "==========================TX16=========================================")
+(print "==========================Printing-results=============================")
+(namespace "free")
+(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] } ])
+(print "Printing All Accounts")
+(print "==========================RIPE-TEST2======================")
+(free.DHOuroboros.GetRipeEliteAurynUncoilPosition "sender03" free.DHOuroboros.TIME4)
+;(select free.DHOuroboros.BaronicSnakeLedger (where "Ouroboros" (<= 0.0)))
+;(select free.DHOuroboros.BaronicSnakeLedger (where "Ouroboros" (<= 0.0)))
+
+;(select free.DHOuroboros.BurningLedger (where "BurnedSnake" (<= 0.0)))
+;(select free.DHOuroboros.EliteAurynUncoilLedger (where "P1A" (<= -1.0)))
+(print "=================Printing BSL-Bytales")
+(free.DHOuroboros.DisplayAccountBSL "sender03")
+(print "=================Printing BSL-COCO")
+;(free.DHOuroboros.DisplayAccountBSL "sender02")
+;(free.DHOuroboros.DisplayAccountPSL "sender02")
+(print "=================Printing AUL-Bytales")
+(free.DHOuroboros.DisplayAccountAUL "sender03")
+(print "=================Printing EAUL-Bytales")
+(free.DHOuroboros.DisplayAccountEAUL "sender03")
+(print "=================Printing EAUL-COCO")
+;(free.DHOuroboros.DisplayAccountEAUL "sender02")
+(print "=================Printing BurningLedger")
+(free.DHOuroboros.DisplayBL )
+;(print "=================Printing CoilHold")
+;(free.DHOuroboros.DisplayAccountBSL "sender10")
+(print "=================Printing SNAKE")
+(free.DHOuroboros.DisplayAccountBSL "sender21")
+(print "=================Printing CD")
+(free.DHOuroboros.DisplayAccountBSL "sender22")
+(print "=================Printing Rest")
+
+(at 8 (free.DHOuroboros.GetAllBaronicBalances free.DHOuroboros.LIQUIDITY_FARMING))
+(at 8 (free.DHOuroboros.GetAllBaronicBalances free.DHOuroboros.SHAREHOLDERS))
+(at 8 (free.DHOuroboros.GetAllBaronicBalances free.DHOuroboros.SUBSIDIARY_STAKING))
+
+;(free.DHOuroboros.UpdateEliteAurynUncoilLedgerByElite "sender03" 5200.0)
+;(select free.DHOuroboros.EliteAurynUncoilLedger (where "P1A" (<= -1.0)))
+;(free.DHOuroboros.IzEliteAurynUncoilLedgerPositionOccupied "sender03" 1.0)
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;
+;;
+;;
+(begin-tx "Gas Testing")
+(print "==========================GAS Testing======================")
+
+(env-gasmodel "table")(env-gaslimit 10000000)(env-gas 0)
+(namespace "free")
+;(env-sigs [ { "key": "6b9847af4a7bea9d38af8702d1597e35c86e08b4c04ce924b9d8b55a2f5f21b1", "caps": [] } ]) ;; Number 03 Keyset
+
+;(env-sigs [ { "key": "6b9847af4a7bea9d38af8702d1597e35c86e08b4c04ce924b9d8b55a2f5f21b1", "caps": [] },
+;            { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] }])
+
+(env-sigs [ { "key": "6b9847af4a7bea9d38af8702d1597e35c86e08b4c04ce924b9d8b55a2f5f21b1", "caps": [] },
+            { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a7", "caps": [] },   ;;free.DH-Master-Minter-Keyset
+            { "key": "92fc59f7c3d4df56d7b4e7f6f3443a543a99c0d0fdd0d77dca2fa97bc3cbde51", "caps": [] },    ;;Number 6 Daily Minter
+            { "key": "d65d9e35d548eb287b72dd51a8e3d8d1443e9a9f4c6f9b3c8c52716e4b8e4a37", "caps": [] },    ;;Sender 17 Liq Farming
+            { "key": "18535b8a17a6db6c23a377953b8ad5a6161611177f5b84ae80b09ff7f07a6014", "caps": [] },    ;;Sender 18 Snake staking
+            { "key": "b62e7814f93e2d0a7e0a3e525ce0a8be4b478deca747a8deed8e5a08dd3e191a", "caps": [] },    ;;Sender 19 Sub staking
+            { "key": "48f3d8a642e92b0cd2382179c5e2d88d2964d9d162d8c4f8775f7a91e4220db1", "caps": [] }])   ;;Sender 20 vEGLD staking
+
+
+;(free.DHOuroboros.BestUncoilAuryn "sender03" 770.0 free.DHOuroboros.TIME3)
+;(free.DHOuroboros.CoilAuryn "sender03" 10.0)
+;(test-capability (free.DHOuroboros.CREDIT_EXISTING free.DHOuroboros.AUTO_STAKING true))
+;(free.DHOuroboros.CreditOuroboros free.DHOuroboros.AUTO_STAKING 1.0 true)
+;(free.DHOuroboros.SpawnDailySnakes free.DHOuroboros.DAILY_MINTER free.DHOuroboros.TIME4)
+;(free.DHOuroboros.AbsoluteTransferAnew "sender03" "sender02" (describe-keyset "free.sender02-keyset") "@Coco" 1756.0 1)
+;(free.DHOuroboros.AbsoluteTransfer "sender03" "sender02" 2000.0 3)
+(free.DHOuroboros.UpdateSnakeAccountHeroTag "sender03" (describe-keyset "free.sender03-keyset") "@BytalesByta")
+;(free.DHOuroboros.AbsoluteTransfer "sender03" "sender02" 100.0 2)
+;(free.DHOuroboros.BestUncoilAuryn "sender03" 340.0 free.DHOuroboros.TIME3)
+;(free.DHOuroboros.GetBurnedOuroborosV2)
+;(free.DHOuroboros.GetAllBaronicBalances "sender03")
+;(free.DHOuroboros.GetAuryndex)
+;(free.DHOuroboros.TotalBaronicSupply "Auryn")
+;(fold (+) 0.0 (free.DHOuroboros.ListBaronicColumn "Auryn"))
+;(free.DHOuroboros.TotalBaronicSupply "Auryn")(free.DHOuroboros.SnapshotBaronicColumn "Auryn")
+;(free.DHOuroboros.GetAuryndex)
+;(at 5 (free.DHOuroboros.GetAllBaronicBalances "sender03"))
+;(free.DHOuroboros.CoilOuroboros "sender03" 20.0)
+;(free.DHOuroboros.SnapshotBaronicColumn "Auryn")
+;(free.DHOuroboros.TestFunction)
+;(keys free.DHOuroboros.BaronicSnakeLedger)
+;(free.DHOuroboros.DisplaySL2)
+;;
+(env-gas)
+(commit-tx)

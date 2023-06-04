@@ -1,0 +1,176 @@
+
+;;MODULE LOADINGS
+;;==============================================================================
+;; PART 01 - Load all Mockup Enviroment Modules
+(load "../pact-repl-utils/init.repl")
+(print "LOADED ALL ENV MODULES")
+;;==============================================================================
+;;
+;;
+;;==============================================================================
+;; PART 02 - Define "free.DH-Master-Keyset"
+(print "==========================TX00========================================")
+(begin-tx)
+  (module demi-key1 GOVERNANCE
+    (defcap GOVERNANCE () true)
+    (defconst DHADMIN "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6")
+  )
+(env-data { "AncientHodlerPrivateTestKey": { "keys": [ demi-key1.DHADMIN  ], "pred": "keys-all" } })
+(namespace "free")
+(define-keyset "free.DH-Master-Keyset" (read-keyset "AncientHodlerPrivateTestKey"))
+(print "Defined the free.DH-Master-Keyset")
+(commit-tx)
+
+(begin-tx)
+  (module demi-key2 GOVERNANCE
+    (defcap GOVERNANCE () true)
+    (defconst DHMM "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a7")
+    (defconst GENESISAMOUNT 490000.0)
+  )
+(env-data { "AncientHodlerPrivateMinterTestKey": { "keys": [ demi-key2.DHMM  ], "pred": "keys-all" } })
+(namespace "free")
+(define-keyset "free.DH-Master-Minter-Keyset" (read-keyset "AncientHodlerPrivateMinterTestKey"))
+(print "Defined the free.DH-Master-Minter-Keyset")
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;==============================================================================
+;; PART 03 - Load pact smart contract
+(print "==========================TX02========================================")
+(begin-tx)
+;(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] } ])
+;(env-data { "init": true })
+;(env-data { "AncientHodlerPrivateTestKey": { "keys": [ test-demiourgos-keys.DHADMIN  ], "pred": "keys-all" } })
+(namespace "free")
+;(define-keyset "free.DH-Master-Keyset" (read-keyset "AncientHodlerPrivateTestKey"))
+;(env-sigs [ { "key": "free.DH-Master-Keyset", "caps": [] } ])
+(load "/home/bytales/PactLanguage/SnakeToken/SnakeContracts/01_DHEliteAccount.pact")
+(load "/home/bytales/PactLanguage/SnakeToken/SnakeContracts/02_DHOuroboros.pact")
+;(load "/home/bytales/PactLanguage/SnakeToken/SnakeContracts/05_SnakeSnapshots.pact")
+(load "/home/bytales/PactLanguage/SnakeToken/SnakeContracts/03_SnakeSpawn.pact")
+
+
+
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;==============================================================================
+;; PART 04 - Use loaded modules
+(print "==========================TX03========================================")
+(begin-tx)
+(use free.DHEliteAccount)
+(use free.DHOuroboros)
+(use free.SnakeSnapshots)
+(use free.SnakeSpawn)
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;==============================================================================
+;; PART 05 - Actual Transaction Testing
+;;         - Create sender00 sender01 and sender01 Accounts
+;;         - Fund these accounts with ouroboros
+;;         - Verify/Dsiplay the funded accounts
+(print "==========================TX04========================================")
+(begin-tx)
+(namespace "free")
+;(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] } ])
+(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a7", "caps": [] } ])
+(test-capability (free.DHOuroboros.ARTIFICIALMINT))
+
+;;SpawnSnakeAccount
+(free.DHOuroboros.SpawnSnakeAccount "sender00" (describe-keyset "free.sender00-keyset"))
+(free.DHOuroboros.SpawnSnakeAccount "sender01" (describe-keyset "free.sender01-keyset"))
+(free.DHOuroboros.SpawnSnakeAccount "sender02" (describe-keyset "free.sender02-keyset"))
+;;FuelSnakeAccount with update.
+(free.DHOuroboros.artificially-mint-snake "sender00"  (describe-keyset "free.sender00-keyset") 5000.0)
+(free.DHOuroboros.artificially-mint-snake "sender01"  (describe-keyset "free.sender01-keyset") 4300.0)
+(free.DHOuroboros.artificially-mint-snake "sender02"  (describe-keyset "free.sender02-keyset") 3300.0)
+;;Verify Accounts
+(expect "sender01 has 2300 Ouroboros" 4300.0 (free.DHOuroboros.GetOuroborosBalance "sender01"))
+;(select free.DHOuroboros.BaronicSnakeLedger (where "Ouroboros" (< 0.0)))
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;==============================================================================
+;; PART 06 - Get Ouroboros balance
+;;         - Using enforce key, example how to use key
+(begin-tx)
+(print "==========================TX06========================================")
+(env-sigs [ { "key": "368820f80c324bbc7c2b0610688a7da43e39f91d118732671cd9c7500ff43cca", "caps": [] } ])
+(print "NOW GETTING Ouroboros Balance for sender00")
+(free.DHOuroboros.GetOuroborosBalance "sender00")
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;==============================================================================
+;; PART 07 - Transfer Ouroboros from sender02 to SENDER00
+;;         - Displays first
+(begin-tx)
+(print "==========================TX07=============================")
+(env-sigs [ { "key": "3a9dd532d73dace195dbb64d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] } ])
+(test-capability (free.DHOuroboros.DEBIT "sender02"))
+(test-capability (free.DHOuroboros.CREDIT "sender00"))
+(test-capability (free.DHOuroboros.TRANSFER "sender02" "sender00" 300.0))
+
+(print "Valoarea Sender 2 inainte")
+(free.DHOuroboros.GetOuroborosBalance "sender02")
+(free.DHOuroboros.TransferOuroboros "sender02" "sender00" 300.0)
+(print "Valoarea Sender 2 dupa")
+(free.DHOuroboros.GetOuroborosBalance "sender02")
+;;(select free.DHOuroboros.BaronicSnakeLedger (where "Ouroboros" (< 0.0)))
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;==============================================================================
+;; PART 08 - Transfer Ouroboros from sender02 to SENDER00
+(begin-tx)
+(print "==========================TX08=============================")
+(namespace "free")
+(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] } ])
+(free.SnakeSnapshots.GetOuroborosSupply)
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;==============================================================================
+;; PART 09 - Create Genesis Minter
+(begin-tx)
+(print "==========================TX09=============================")
+(namespace "free")
+;;Requires "free.DH-Master-Keyset" and "free.DH-Master-Minter-Keyset" to create the daily mint
+(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a7", "caps": [] },
+            { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] }])
+
+;;Initialize SpawnCounter
+(free.SnakeSpawn.SpawnCounter)
+;;Spawn Snake Account (add sender20 and sender03 in the Snake Ledgers)
+(free.DHOuroboros.SpawnSnakeAccount "sender20" (describe-keyset "free.sender20-keyset"))
+(free.DHOuroboros.SpawnSnakeAccount "sender03" (describe-keyset "free.sender03-keyset"))
+
+;;Add Capabilities To Mint Genesis Amount
+(test-capability (free.DHOuroboros.ARTIFICIALMINT))
+(test-capability (free.SnakeSpawn.GENESIS_SPAWN demi-key2.GENESISAMOUNT))
+(free.SnakeSpawn.SpawnPrimordialSnakes "sender20" (describe-keyset "free.sender20-keyset") demi-key2.GENESISAMOUNT )
+
+
+;;Trying to spawn daily Snakes amount on sender03
+(free.SnakeSpawn.SpawnDailySnakes "sender03" (describe-keyset "free.sender03-keyset"))
+
+(expect "sender20 has 490.000 Ouroboros" 490000.0 (free.DHOuroboros.GetOuroborosBalance "sender20"))
+(free.SnakeSpawn.GetSpawnCounter)
+(commit-tx)
+
+
+
+
+(begin-tx)
+(namespace "free")
+(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] } ])
+(select free.DHOuroboros.BaronicSnakeLedger (where "Ouroboros" (< 0.0)))
+(commit-tx)

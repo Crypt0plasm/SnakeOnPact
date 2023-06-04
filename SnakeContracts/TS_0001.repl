@@ -1,0 +1,166 @@
+
+;;MODULE LOADINGS
+;;==============================================================================
+;; PART 01 - Load all Mockup Enviroment Modules
+(load "../pact-repl-utils/init.repl")
+(print "LOADED ALL ENV MODULES")
+;;==============================================================================
+;;
+;;
+;;==============================================================================
+;; PART 02 - Define "free.DH-Master-Keyset"
+(print "==========================TX00========================================")
+(begin-tx)
+  (module demi-key1 GOVERNANCE
+    (defcap GOVERNANCE () true)
+    (defconst DHADMIN "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6")
+  )
+(env-data { "AncientHodlerPrivateTestKey": { "keys": [ demi-key1.DHADMIN  ], "pred": "keys-all" } })
+(namespace "free")
+(define-keyset "free.DH-Master-Keyset" (read-keyset "AncientHodlerPrivateTestKey"))
+(print "Defined the free.DH-Master-Keyset")
+(commit-tx)
+
+(begin-tx)
+  (module demi-key2 GOVERNANCE
+    (defcap GOVERNANCE () true)
+    (defconst DHMM "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a7")
+    (defconst GENESISAMOUNT 490000.0)
+  )
+(env-data { "AncientHodlerPrivateMinterTestKey": { "keys": [ demi-key2.DHMM  ], "pred": "keys-all" } })
+(namespace "free")
+(define-keyset "free.DH-Master-Minter-Keyset" (read-keyset "AncientHodlerPrivateMinterTestKey"))
+(print "Defined the free.DH-Master-Minter-Keyset")
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;==============================================================================
+;; PART 03 - Load pact smart contract
+(print "==========================TX02========================================")
+(begin-tx)
+;(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] } ])
+;(env-data { "init": true })
+;(env-data { "AncientHodlerPrivateTestKey": { "keys": [ test-demiourgos-keys.DHADMIN  ], "pred": "keys-all" } })
+(namespace "free")
+;(define-keyset "free.DH-Master-Keyset" (read-keyset "AncientHodlerPrivateTestKey"))
+;(env-sigs [ { "key": "free.DH-Master-Keyset", "caps": [] } ])
+(load "/home/bytales/PactLanguage/SnakeToken/SnakeContracts/01_DHEliteAccount.pact")
+(load "/home/bytales/PactLanguage/SnakeToken/SnakeContracts/02_DHOuroboros.pact")
+(load "/home/bytales/PactLanguage/SnakeToken/SnakeContracts/04_SnakeVest.pact")
+
+
+
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;==============================================================================
+;; PART 04 - Use loaded modules
+(print "==========================TX03========================================")
+(begin-tx)
+(use free.DHEliteAccount)
+(use free.DHOuroboros)
+(use free.SnakeVest)
+(commit-tx)
+;;==============================================================================
+;;
+;;==============================================================================
+;; PART 05 - Create Genesis Minter
+(begin-tx)
+(print "==========================TX04=============================")
+(print "==========================MINTGENESIS======================")
+(namespace "free")
+;;Requires "free.DH-Master-Keyset" and "free.DH-Master-Minter-Keyset" to create the daily mint
+;(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a7", "caps": [] },
+;            { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] }])
+(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a7", "caps": [] } ])
+;;Initialize SpawnCounter
+(free.DHOuroboros.SpawnMintingCounter)
+
+
+
+
+
+;;Spawn Snake Account (add sender20 and )
+(free.DHOuroboros.SpawnSnakeAccount "sender20" (describe-keyset "free.sender20-keyset"))
+
+
+;;Add Capabilities To Mint Genesis Amount
+(test-capability (free.DHOuroboros.GENESIS_SPAWN demi-key2.GENESISAMOUNT))
+(free.DHOuroboros.SpawnPrimordialSnakes "sender20" (describe-keyset "free.sender20-keyset"))
+
+
+;;Trying to spawn daily Snakes amount on sender03
+
+(expect "sender20 has 490.000 Ouroboros" 490000.0 (free.DHOuroboros.GetOuroborosBalance "sender20"))
+(free.DHOuroboros.GetSpawnCounter)
+(commit-tx)
+
+;;==============================================================================
+;; PART 06 - Mint Daily Supply
+(begin-tx)
+(print "==========================TX05=============================")
+(print "==========================MINTDAILY1=======================")
+(namespace "free")
+;(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] },   ;;"free.DH-Master-Keyset"
+;            { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a7", "caps": [] }])  ;;free.DH-Master-Minter-Keyset
+
+;(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a7", "caps": [] },   ;;free.DH-Master-Minter-Keyset
+;            { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] }])  ;;"free.DH-Master-Keyset"
+
+;(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a7", "caps": [] } ]) ;; free.DH-Master-Minter-Keyset
+
+;(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] } ]) ;;"free.DH-Master-Keyset"
+(free.DHOuroboros.SpawnSnakeAccount "sender03" (describe-keyset "free.sender03-keyset"))
+;;Add Capabilities To Mint Daily Amnount
+(test-capability (free.DHOuroboros.DAILY_SPAWN))
+(free.DHOuroboros.SpawnDailySnakes "sender03" (describe-keyset "free.sender03-keyset") free.DHOuroboros.TIME1)
+;(expect "sender03 has 950 Ouroboros" 951.0 (free.DHOuroboros.GetOuroborosBalance "sender03"))
+
+(print "GETTTTTTTEN OUROBOROS SUPPLY")
+
+
+
+;(free.DHOuroboros.GetOuroborosSupply)
+
+
+(commit-tx)
+
+(begin-tx)
+(print "==========================TX05b=============================")
+(print "==========================MINTDAILY2=======================")
+(namespace "free")
+(free.DHOuroboros.SpawnSnakeAccount "sender04" (describe-keyset "free.sender04-keyset"))
+;;Add Capabilities To Mint Daily Amnount
+(test-capability (free.DHOuroboros.DAILY_SPAWN))
+(free.DHOuroboros.SpawnDailySnakes "sender04" (describe-keyset "free.sender04-keyset") free.DHOuroboros.TIME3)
+
+
+
+(commit-tx)
+
+
+
+
+;;==============================================================================
+;; PART 06 - Get Supply
+(begin-tx)
+(print "==========================TX06=============================")
+(namespace "free")
+;(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] } ])
+(free.DHOuroboros.GetOuroborosSupply)
+(commit-tx)
+;;==============================================================================
+;;
+;;
+;;
+;;==============================================================================
+;;
+;; Display all entries.
+(begin-tx)
+(print "==========================TX07=============================")
+(namespace "free")
+(env-sigs [ { "key": "6be2f485a7af75fedb4b7f1d1dba6572fb783d0fdd324685e32fbda2f89f99a6", "caps": [] } ])
+(select free.DHOuroboros.BaronicSnakeLedger (where "Ouroboros" (< 0.0)))
+(commit-tx)
