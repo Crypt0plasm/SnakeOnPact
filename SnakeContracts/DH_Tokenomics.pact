@@ -112,7 +112,7 @@
 ;;                [F.INTR] - No restriction Function, used for internal computations
 ;;                [F.USER] - No restriction Function, used by the USERs.
 ;;                [MINTER] - Restricted Function, used only by MASTERMINTER
-;;                [ADMIN.] - Restricted Function, used only bz ADMIN.
+;;                [ADMIN.] - Restricted Function, used only by ADMIN.
 ;;                [xxxCAP] - Restricted Function, used for internal computations,
 ;;                           Protected by different capabilities that must be aquired beforehand.
 ;;                [xxxxxx] - Restricted Function, doesnt require directly a Capability
